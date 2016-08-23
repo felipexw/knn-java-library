@@ -1,4 +1,4 @@
-package com.github.felipexw;
+package com.github.felipexw.metrics;
 
 /**
  * Created by felipe.appio on 23/08/2016.
