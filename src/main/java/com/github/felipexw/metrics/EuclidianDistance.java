@@ -5,7 +5,7 @@ package com.github.felipexw.metrics;
  */
 public class EuclidianDistance implements Distance{
     @Override
-    public double calculate() {
+    public double calculate( ) {
         return 0;
     }
 }
