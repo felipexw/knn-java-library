@@ -14,6 +14,6 @@ public abstract class Classifier {
 
     public abstract void train(List<LabeledTrainingInstance> instances);
 
-    public abstract PredictedInstance predict(Instance instance);
+    public abstract PredictedInstance predict(LabeledTrainingInstance instance);
 
 }

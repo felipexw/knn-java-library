@@ -13,6 +13,7 @@ import java.util.List;
 public class SimpleKNNClassifier extends Classifier {
     private short k;
     private double[][] features;
+
     private DistanceCalculator distanceCalculator;
 
     public SimpleKNNClassifier(DistanceCalculator distanceCalculator) {
@@ -24,6 +25,7 @@ public class SimpleKNNClassifier extends Classifier {
         if (instances == null || instances.isEmpty())
             throw new IllegalArgumentException("Instances for training can't be null or empty.");
 
+
         features = new double[instances.size()][instances.size()];
 
         for (short i = 0; i < features.length; i++) {
@@ -31,15 +33,19 @@ public class SimpleKNNClassifier extends Classifier {
                 double[] dataPoint1 = instances.get(i).getFeatures();
                 double[] dataPoint2 = instances.get(j + 1).getFeatures();
                 features[i][j+1] = distanceCalculator.calculate(dataPoint1, dataPoint2);
-                System.out.println("DistanceCalculator between: " + instances.get(i) + " and " + instances.get(j+1));
             }
         }
     }
 
     @Override
-    public PredictedInstance predict(Instance instance) {
+    public PredictedInstance predict(LabeledTrainingInstance instance) {
         if (instance == null)
             throw new IllegalArgumentException("Instance to predict can't be null");
+
+        for(short i=0; i < instance.getFeatures().length; i++){
+
+        }
+
         return new PredictedInstance("", 0d);
     }
 

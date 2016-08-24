@@ -49,7 +49,7 @@ public class SimpleKNNClassifierTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void when_train_method_its_called_with_empty_args_it_should_raise_an_exception_(){
-        classifier.train(null);
+        classifier.train(Arrays.asList());
     }
 
 }
