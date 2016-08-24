@@ -1,8 +1,12 @@
 import com.github.felipexw.metrics.Distance;
 import com.github.felipexw.metrics.EuclidianDistance;
+import com.github.felipexw.types.Instance;
 import com.google.common.truth.Truth;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -28,5 +32,8 @@ public class EuclidianDistanceTest {
         double expected = Math.round(2.449489742783178);
         Truth.assertThat(found).isEqualTo(expected);
     }
+
+
+
 
 }
