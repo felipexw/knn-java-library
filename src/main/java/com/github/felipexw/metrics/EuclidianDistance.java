@@ -5,7 +5,9 @@ package com.github.felipexw.metrics;
  */
 public class EuclidianDistance implements Distance{
     @Override
-    public double calculate( ) {
+    public double calculate(double[] a, double[] b ) {
+        if (a == null || a.length == 0)
+            throw new IllegalArgumentException("The params can't be null or empty.");
         return 0;
     }
 }

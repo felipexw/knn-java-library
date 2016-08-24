@@ -1,5 +1,9 @@
 package com.github.felipexw.classifier;
 
+import com.github.felipexw.types.Instance;
+
+import java.util.List;
+
 /**
  * Created by felipe.appio on 23/08/2016.
  */
@@ -8,12 +12,12 @@ public class SimpleKNNClassifier extends Classifier {
     private long features[][];
 
     @Override
-    void train() {
+    public void train(List<Instance> instances) {
 
     }
 
     @Override
-    double predict() {
+    public double predict(Instance instance) {
         return 0;
     }
 }

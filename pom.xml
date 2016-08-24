@@ -45,15 +45,6 @@
         </dependency>
         -->
 
-        <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
-will fail, preventing Maven from packaging the WAR. Tapestry includes a large number
-of testing facilities designed for use with TestNG (http://testng.org/), so it's recommended. -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng-release-version}</version>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.tapestry</groupId>
@@ -70,6 +61,13 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <version>${servlet-api-release-version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>junit</groupId>-->
+            <!--<artifactId>junit</artifactId>-->
+            <!--<version>4.12</version>-->
+        <!--</dependency>-->
+
 
         <!-- Provide dependency to the Tapestry javadoc taglet which replaces the Maven component report -->
         <dependency>
@@ -148,7 +146,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
     <properties>
         <tapestry-release-version>5.4.1</tapestry-release-version>
         <servlet-api-release-version>2.5</servlet-api-release-version>
-        <testng-release-version>6.8.21</testng-release-version>
+        <!--<testng-release-version>6.8.21</testng-release-version>-->
         <slf4j-release-version>1.7.19</slf4j-release-version>
 
     </properties>

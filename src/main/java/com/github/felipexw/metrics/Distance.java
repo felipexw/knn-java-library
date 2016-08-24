@@ -5,5 +5,5 @@ package com.github.felipexw.metrics;
  */
 public interface Distance {
 
-    double calculate();
+    double calculate(double[] a, double[] b);
 }
