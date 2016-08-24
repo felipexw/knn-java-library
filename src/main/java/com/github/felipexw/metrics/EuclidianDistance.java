@@ -8,6 +8,14 @@ public class EuclidianDistance implements Distance{
     public double calculate(double[] a, double[] b ) {
         if (a == null || a.length == 0)
             throw new IllegalArgumentException("The params can't be null or empty.");
-        return 0;
+        double distance = 0;
+
+        for(short i=0; i < a.length; i++ ){
+            for(short j =0; j < b.length; j++){
+                double difference = b[j] - a[i];
+                distance +=  Math.pow(difference, 2);
+            }
+        }
+        return Math.round(Math.sqrt(distance));
     }
 }
