@@ -1,5 +1,5 @@
 import com.github.felipexw.classifier.SimpleKNNClassifier;
-import com.github.felipexw.metrics.EuclidianDistance;
+import com.github.felipexw.metrics.EuclidianDistanceCalculator;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.google.common.truth.Truth;
 import org.junit.Before;
@@ -15,7 +15,7 @@ public class SimpleKNNClassifierTest {
 
     @Before
     public void setUp() {
-        classifier = new SimpleKNNClassifier(new EuclidianDistance());
+        classifier = new SimpleKNNClassifier(new EuclidianDistanceCalculator());
     }
 
     @Test

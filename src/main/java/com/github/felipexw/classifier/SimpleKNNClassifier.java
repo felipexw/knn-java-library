@@ -1,6 +1,6 @@
 package com.github.felipexw.classifier;
 
-import com.github.felipexw.metrics.Distance;
+import com.github.felipexw.metrics.DistanceCalculator;
 import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
@@ -13,10 +13,10 @@ import java.util.List;
 public class SimpleKNNClassifier extends Classifier {
     private short k;
     private double[][] features;
-    private Distance distance;
+    private DistanceCalculator distanceCalculator;
 
-    public SimpleKNNClassifier(Distance distance) {
-        this.distance = distance;
+    public SimpleKNNClassifier(DistanceCalculator distanceCalculator) {
+        this.distanceCalculator = distanceCalculator;
     }
 
     @Override
@@ -27,8 +27,8 @@ public class SimpleKNNClassifier extends Classifier {
             for (short j = -1; j < features.length - 1; j++) {
                 double[] dataPoint1 = instances.get(i).getFeatures();
                 double[] dataPoint2 = instances.get(j + 1).getFeatures();
-                features[i][j+1] = distance.calculate(dataPoint1, dataPoint2);
-                System.out.println("Distance between: " + instances.get(i) + " and " + instances.get(j+1));
+                features[i][j+1] = distanceCalculator.calculate(dataPoint1, dataPoint2);
+                System.out.println("DistanceCalculator between: " + instances.get(i) + " and " + instances.get(j+1));
             }
         }
     }

@@ -3,7 +3,7 @@ package com.github.felipexw.metrics;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public class EuclidianDistance implements Distance {
+public class EuclidianDistanceCalculator implements DistanceCalculator {
     @Override
     public double calculate(double[] a, double[] b) {
         if (a == null || a.length == 0)
