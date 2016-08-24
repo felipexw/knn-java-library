@@ -3,6 +3,7 @@ package com.github.felipexw.classifier;
 import com.github.felipexw.metrics.Distance;
 import com.github.felipexw.metrics.EuclidianDistance;
 import com.github.felipexw.types.Instance;
+import com.github.felipexw.types.TrainingInstance;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,7 @@ public class SimpleKNNClassifier extends Classifier {
     }
 
     @Override
-    public void train(List<Instance> instances) {
+    public void train(List<TrainingInstance> instances) {
 //        Collections.sort(instances, (Instance i1, Instance i2) -> i1.getDescription().compareTo(i2.getDescription()));
         features = new double[instances.size()][instances.size()];
 
@@ -42,4 +43,6 @@ public class SimpleKNNClassifier extends Classifier {
     public double[][] getFeatures() {
         return features;
     }
+
+
 }

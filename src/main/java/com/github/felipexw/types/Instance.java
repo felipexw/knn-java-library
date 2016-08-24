@@ -5,17 +5,11 @@ import java.util.List;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public class Instance {
-    private final double[] features;
+public abstract class Instance {
     private final String description;
 
-    public Instance(double[] features, String description) {
-        this.features = features;
+    public Instance(String description) {
         this.description = description;
-    }
-
-    public double[] getFeatures() {
-        return features;
     }
 
     public String getDescription() {

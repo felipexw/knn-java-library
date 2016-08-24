@@ -1,5 +1,6 @@
 import com.github.felipexw.classifier.SimpleKNNClassifier;
 import com.github.felipexw.types.Instance;
+import com.github.felipexw.types.TrainingInstance;
 import com.google.common.truth.Truth;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +20,9 @@ public class SimpleKNNClassifierTest {
 
     @Test
     public void it_should_calculate_the_distance_between_two_points() {
-        Instance p1 = new Instance(new double[]{1, 2}, "P1");
-        Instance p2 = new Instance(new double[]{3, 2}, "P2");
-        Instance p3 = new Instance(new double[]{1, 2}, "P3");
+        TrainingInstance p1 = new TrainingInstance(new double[]{1, 2}, "P1");
+        TrainingInstance p2 = new TrainingInstance(new double[]{3, 2}, "P2");
+        TrainingInstance p3 = new TrainingInstance(new double[]{1, 2}, "P3");
         double[][] expected = new double[][]{
                 {0, 2, 0},
                 {2, 0, 2},
