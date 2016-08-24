@@ -58,7 +58,7 @@ public class SimpleKNNClassifier extends Classifier {
         return getLabelByMajorityVote(neighboorses);
     }
 
-    private PredictedInstance getLabelByMajorityVote(List<Neighboor> neighboors) {
+    public PredictedInstance getLabelByMajorityVote(List<Neighboor> neighboors) {
         Map<String, Integer> votes = new HashMap<>();
 
         for (Neighboor neighboor : neighboors) {
@@ -87,7 +87,7 @@ public class SimpleKNNClassifier extends Classifier {
             }
 
         }
-        return new PredictedInstance(votedLabel, 1/min);
+        return new PredictedInstance(votedLabel, min/100);
     }
 
     public List<Neighboor> getKNearestNeighbors(List<Neighboor> neighboors) {

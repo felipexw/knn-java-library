@@ -5,6 +5,7 @@ package com.github.felipexw.types;
  */
 public abstract class LabeledInstance implements Instance {
     protected final String label;
+    private int count;
 
     public LabeledInstance(String label) {
         this.label = label;
@@ -12,5 +13,14 @@ public abstract class LabeledInstance implements Instance {
 
     public String getLabel() {
         return label;
+    }
+
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
     }
 }

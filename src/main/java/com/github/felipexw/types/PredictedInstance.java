@@ -19,4 +19,34 @@ public class PredictedInstance implements Instance{
     public double getScore() {
         return score;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PredictedInstance)) return false;
+
+        PredictedInstance that = (PredictedInstance) o;
+
+        if (Double.compare(that.score, score) != 0) return false;
+        return label.equals(that.label);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = label.hashCode();
+        temp = Double.doubleToLongBits(score);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PredictedInstance{" +
+                "label='" + label + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }
