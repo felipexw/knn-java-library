@@ -42,4 +42,14 @@ public class SimpleKNNClassifierTest {
         classifier.predict(null);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void when_train_method_its_called_with_null_args_it_should_raise_an_exception_(){
+        classifier.train(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void when_train_method_its_called_with_empty_args_it_should_raise_an_exception_(){
+        classifier.train(null);
+    }
+
 }

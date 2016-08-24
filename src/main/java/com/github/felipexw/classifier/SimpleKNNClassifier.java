@@ -21,6 +21,9 @@ public class SimpleKNNClassifier extends Classifier {
 
     @Override
     public void train(List<LabeledTrainingInstance> instances) {
+        if (instances == null || instances.isEmpty())
+            throw new IllegalArgumentException("Instances for training can't be null or empty.");
+
         features = new double[instances.size()][instances.size()];
 
         for (short i = 0; i < features.length; i++) {

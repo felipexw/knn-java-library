@@ -6,8 +6,8 @@ package com.github.felipexw.types;
 public class LabeledTrainingInstance extends LabeledInstance{
     private final double[] features;
 
-    public LabeledTrainingInstance(double[] features, String description) {
-        super(description);
+    public LabeledTrainingInstance(double[] features, String label) {
+        super(label);
         this.features = features;
     }
 
