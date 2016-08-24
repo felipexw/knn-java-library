@@ -1,7 +1,8 @@
 package com.github.felipexw.classifier;
 
 import com.github.felipexw.types.Instance;
-import com.github.felipexw.types.TrainingInstance;
+import com.github.felipexw.types.LabeledTrainingInstance;
+import com.github.felipexw.types.PredictedInstance;
 
 import java.util.List;
 
@@ -11,8 +12,8 @@ import java.util.List;
 public abstract class Classifier {
 
 
-    public abstract void train(List<TrainingInstance> instances);
+    public abstract void train(List<LabeledTrainingInstance> instances);
 
-    public abstract double predict(Instance instance);
+    public abstract PredictedInstance predict(Instance instance);
 
 }

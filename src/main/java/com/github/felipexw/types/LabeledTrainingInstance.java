@@ -3,10 +3,10 @@ package com.github.felipexw.types;
 /**
  * Created by felipe.appio on 24/08/2016.
  */
-public class TrainingInstance extends Instance{
+public class LabeledTrainingInstance extends LabeledInstance{
     private final double[] features;
 
-    public TrainingInstance(double[] features, String description) {
+    public LabeledTrainingInstance(double[] features, String description) {
         super(description);
         this.features = features;
     }

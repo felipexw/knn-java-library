@@ -1,11 +1,10 @@
 package com.github.felipexw.classifier;
 
 import com.github.felipexw.metrics.Distance;
-import com.github.felipexw.metrics.EuclidianDistance;
 import com.github.felipexw.types.Instance;
-import com.github.felipexw.types.TrainingInstance;
+import com.github.felipexw.types.LabeledTrainingInstance;
+import com.github.felipexw.types.PredictedInstance;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,13 +15,12 @@ public class SimpleKNNClassifier extends Classifier {
     private double[][] features;
     private Distance distance;
 
-    public SimpleKNNClassifier() {
-        distance = new EuclidianDistance();
+    public SimpleKNNClassifier(Distance distance) {
+        this.distance = distance;
     }
 
     @Override
-    public void train(List<TrainingInstance> instances) {
-//        Collections.sort(instances, (Instance i1, Instance i2) -> i1.getDescription().compareTo(i2.getDescription()));
+    public void train(List<LabeledTrainingInstance> instances) {
         features = new double[instances.size()][instances.size()];
 
         for (short i = 0; i < features.length; i++) {
@@ -36,8 +34,18 @@ public class SimpleKNNClassifier extends Classifier {
     }
 
     @Override
-    public double predict(Instance instance) {
-        return 0;
+    public PredictedInstance predict(Instance instance) {
+        if (instance == null)
+            throw new IllegalArgumentException("Instance to predict can't be null");
+        return new PredictedInstance("", 0d);
+    }
+
+    private List<Double> getKNearestNeighbors(){
+
+        for(short i =0; i < features.length; i++){
+
+        }
+        return null;
     }
 
     public double[][] getFeatures() {
