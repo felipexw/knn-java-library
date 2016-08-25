@@ -11,6 +11,13 @@ public class LabeledTrainingInstance extends LabeledInstance{
         this.features = features;
     }
 
+    private void validateData(){
+        /*
+            TODO:
+            implement a method to validate the features.
+         */
+    }
+
     public double[] getFeatures() {
         return features;
     }
