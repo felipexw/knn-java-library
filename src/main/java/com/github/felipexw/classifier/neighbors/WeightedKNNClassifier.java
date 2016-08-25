@@ -1,4 +1,4 @@
-package com.github.felipexw.neighbors;
+package com.github.felipexw.classifier.neighbors;
 
 import com.github.felipexw.classifier.Classifier;
 import com.github.felipexw.types.LabeledTrainingInstance;

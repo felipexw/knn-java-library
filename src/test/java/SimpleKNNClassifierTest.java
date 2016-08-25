@@ -1,5 +1,5 @@
-import com.github.felipexw.neighbors.Neighboor;
-import com.github.felipexw.neighbors.SimpleKNNClassifier;
+import com.github.felipexw.classifier.neighbors.Neighboor;
+import com.github.felipexw.classifier.neighbors.SimpleKNNClassifier;
 import com.github.felipexw.metrics.EuclidianSimilarityCalculator;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
