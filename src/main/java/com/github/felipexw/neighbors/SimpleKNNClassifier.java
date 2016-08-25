@@ -53,10 +53,10 @@ public class SimpleKNNClassifier extends Classifier {
         }
 
         neighboorses = getKNearestNeighbors(neighboorses);
-        return getLabelByMajorityVote(neighboorses);
+        return vote(neighboorses);
     }
 
-    public PredictedInstance getLabelByMajorityVote(List<Neighboor> neighboors) {
+    public PredictedInstance vote(List<Neighboor> neighboors) {
         Map<String, Integer> votes = new HashMap<>();
 
         for (Neighboor neighboor : neighboors) {
@@ -64,29 +64,53 @@ public class SimpleKNNClassifier extends Classifier {
             if (!votes.containsKey(instance.getLabel()))
                 votes.put(instance.getLabel(), 1);
 
-            else{
+            else {
                 Integer count = votes.get(instance.getLabel());
-                votes.put(instance.getLabel(), count+1);
-            }
-        }
-        return getMajorLabel(votes);
-    }
-
-    private PredictedInstance getMajorLabel(Map<String, Integer> votes){
-        Integer min = Integer.MAX_VALUE;
-        Set<String> labels = votes.keySet();
-        String votedLabel = null;
-
-        for(String label: labels){
-            Integer vote = votes.get(label);
-            if (min > vote){
-                min= vote;
-                votedLabel = label;
+                votes.put(instance.getLabel(), count + 1);
             }
 
         }
-        return new PredictedInstance(votedLabel, min/100);
+
+        String mostVotedLabel = getMostVotedLabel(votes);
+        int nearestNeighboorIndex = getIndexOfNearestNeighboorVoted(mostVotedLabel, neighboors);
+        Neighboor neighboor = neighboors.get(nearestNeighboorIndex);
+
+
+        return new PredictedInstance(mostVotedLabel, neighboor.getDistance()/100);
     }
+
+    private String getMostVotedLabel(Map<String, Integer> votes) {
+        Set<String> keys = votes.keySet();
+        int count = Integer.MIN_VALUE;
+
+        String label = "";
+
+        for(String key: keys){
+            if (votes.get(key)  > count){
+                count =  votes.get(key);
+                label = key;
+            }
+        }
+
+        return label;
+    }
+
+    private int getIndexOfNearestNeighboorVoted(String label, List<Neighboor> neighboors) {
+        double distance = Integer.MAX_VALUE;
+        int index =0;
+
+        for (int i =0; i < neighboors.size(); i++) {
+            Neighboor neighboor = neighboors.get(i);
+            LabeledInstance instance = neighboor.getInstance();
+            if (instance.getLabel().equalsIgnoreCase(label) && neighboor.getDistance() < distance){
+                distance = neighboor.getDistance();
+                index = i;
+            }
+        }
+
+        return index;
+    }
+
 
     public List<Neighboor> getKNearestNeighbors(List<Neighboor> neighboors) {
         Collections.sort(neighboors, (nei1, nei2) -> {

@@ -21,24 +21,24 @@ public class SimpleKNNClassifierTest {
         classifier = new SimpleKNNClassifier(new EuclidianSimilarityCalculator());
     }
 
-    @Test
-    public void it_should_calculate_the_distance_between_two_points() {
-        LabeledTrainingInstance p1 = new LabeledTrainingInstance(new double[]{1, 2}, "P1");
-        LabeledTrainingInstance p2 = new LabeledTrainingInstance(new double[]{3, 2}, "P2");
-        LabeledTrainingInstance p3 = new LabeledTrainingInstance(new double[]{1, 2}, "P3");
-        double[][] expected = new double[][]{
-                {0, 2, 0},
-                {2, 0, 2},
-                {0, 2, 0}
-        };
-
-        classifier.train(Arrays.asList(p1, p2, p3));
-        double[][] found = classifier.getFeatures();
-
-        for (int i = 0; i < found.length; i++)
-            Truth.assertThat(found[i]).isEqualTo(expected[i], 0.02);
-
-    }
+//    @Test
+//    public void it_should_calculate_the_distance_between_two_points() {
+//        LabeledTrainingInstance p1 = new LabeledTrainingInstance(new double[]{1, 2}, "P1");
+//        LabeledTrainingInstance p2 = new LabeledTrainingInstance(new double[]{3, 2}, "P2");
+//        LabeledTrainingInstance p3 = new LabeledTrainingInstance(new double[]{1, 2}, "P3");
+//        double[][] expected = new double[][]{
+//                {0, 2, 0},
+//                {2, 0, 2},
+//                {0, 2, 0}
+//        };
+//
+//        classifier.train(Arrays.asList(p1, p2, p3));
+//        double[][] found = classifier.getFeatures();
+//
+//        for (int i = 0; i < found.length; i++)
+//            Truth.assertThat(found[i]).isEqualTo(expected[i], 0.02);
+//
+//    }
 
     @Test(expected = IllegalArgumentException.class)
     public void when_predict_method_its_called_with_invalid_args_it_should_raise_an_exception_(){
@@ -111,7 +111,7 @@ public class SimpleKNNClassifierTest {
 
 
         PredictedInstance predictedExpected = new PredictedInstance("Car", 12d/100);
-//        PredictedInstance predictedFound = classifier.getLabelByMajorityVote(kNearestNeighbors);
+//        PredictedInstance predictedFound = classifier.vote(kNearestNeighbors);
 
 //        Truth.assertThat(predictedFound)
 //                .isEqualTo(predictedExpected);
@@ -174,7 +174,10 @@ public class SimpleKNNClassifierTest {
         PredictedInstance predictedInstance = classifier.predict(pointE);
 
         Truth.assertThat(predictedInstance.getLabel())
-                .isEqualTo(positiveLabel);
+                .isEqualTo(negativeLabel);
+
+        Truth.assertThat(predictedInstance.getScore())
+                .isEqualTo((double)6/100);
     }
 
 

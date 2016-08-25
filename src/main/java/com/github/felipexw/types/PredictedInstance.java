@@ -6,6 +6,7 @@ package com.github.felipexw.types;
 public class PredictedInstance implements Instance{
     private final String label;
     private final double score;
+    private int count;
 
     public String getLabel() {
         return label;
@@ -14,6 +15,14 @@ public class PredictedInstance implements Instance{
     public PredictedInstance(String label, double score) {
         this.label = label;
         this.score = score;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public double getScore() {
@@ -27,19 +36,13 @@ public class PredictedInstance implements Instance{
 
         PredictedInstance that = (PredictedInstance) o;
 
-        if (Double.compare(that.score, score) != 0) return false;
         return label.equals(that.label);
 
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = label.hashCode();
-        temp = Double.doubleToLongBits(score);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return label.hashCode();
     }
 
     @Override
@@ -47,6 +50,7 @@ public class PredictedInstance implements Instance{
         return "PredictedInstance{" +
                 "label='" + label + '\'' +
                 ", score=" + score +
+                ", count=" + count +
                 '}';
     }
 }
