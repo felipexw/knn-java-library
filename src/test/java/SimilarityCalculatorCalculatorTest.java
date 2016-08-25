@@ -1,3 +1,4 @@
+import com.github.felipexw.metrics.PearsonSimilarityCalculator;
 import com.github.felipexw.metrics.SimilarityCalculator;
 import com.github.felipexw.metrics.EuclidianSimilarityCalculator;
 import com.github.felipexw.metrics.ManhattanSimilarityCalculator;
@@ -23,6 +24,12 @@ public class SimilarityCalculatorCalculatorTest {
         double found = similarityCalculator.calculate(new double[]{3}, new double[]{5});
         double expected = Math.round(2.449489742783178);
         Truth.assertThat(found).isEqualTo(expected);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void when_calculate_the_pearson_correlation_with_empty_point_it_should_raise_an_exception(){
+        SimilarityCalculator similarityCalculator = new PearsonSimilarityCalculator();
+        similarityCalculator.calculate(null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
