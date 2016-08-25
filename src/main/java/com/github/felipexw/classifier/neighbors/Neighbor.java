@@ -5,11 +5,11 @@ import com.github.felipexw.types.LabeledTrainingInstance;
 /**
  * Created by felipe.appio on 24/08/2016.
  */
-public class Neighboor {
+public class Neighbor {
     private final LabeledTrainingInstance instance;
     private final double distance;
 
-    public Neighboor(LabeledTrainingInstance instance, double distance) {
+    public Neighbor(LabeledTrainingInstance instance, double distance) {
         this.instance = instance;
         this.distance = distance;
     }
@@ -25,12 +25,12 @@ public class Neighboor {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Neighboor)) return false;
+        if (!(o instanceof Neighbor)) return false;
 
-        Neighboor neighboor = (Neighboor) o;
+        Neighbor neighbor = (Neighbor) o;
 
-        if (Double.compare(neighboor.distance, distance) != 0) return false;
-        return instance.equals(neighboor.instance);
+        if (Double.compare(neighbor.distance, distance) != 0) return false;
+        return instance.equals(neighbor.instance);
 
     }
 

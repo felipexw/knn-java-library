@@ -1,4 +1,4 @@
-import com.github.felipexw.classifier.neighbors.Neighboor;
+import com.github.felipexw.classifier.neighbors.Neighbor;
 import com.github.felipexw.classifier.neighbors.SimpleKNNClassifier;
 import com.github.felipexw.metrics.EuclidianSimilarityCalculator;
 import com.github.felipexw.types.LabeledTrainingInstance;
@@ -60,24 +60,24 @@ public class SimpleKNNClassifierTest {
     @Test
     public void it_should_get_the_most_voted_label(){
         LabeledTrainingInstance dummy1 = new LabeledTrainingInstance(null, "Car");
-        Neighboor neighboor1  = new Neighboor(dummy1, 12d);
+        Neighbor neighbor1 = new Neighbor(dummy1, 12d);
 
         LabeledTrainingInstance dummy2 = new LabeledTrainingInstance(null, "Car");
-        Neighboor neighboor2  = new Neighboor(dummy1, 15d);
+        Neighbor neighbor2 = new Neighbor(dummy1, 15d);
 
         LabeledTrainingInstance dummy3 = new LabeledTrainingInstance(null, "Car");
-        Neighboor neighboor3  = new Neighboor(dummy1, 30d);
+        Neighbor neighbor3 = new Neighbor(dummy1, 30d);
 
         LabeledTrainingInstance dummy4 = new LabeledTrainingInstance(null, "Boat");
-        Neighboor neighboor4  = new Neighboor(dummy1, 50d);
+        Neighbor neighbor4 = new Neighbor(dummy1, 50d);
 
         LabeledTrainingInstance dummy5 = new LabeledTrainingInstance(null, "Boat");
-        Neighboor neighboor5  = new Neighboor(dummy1, 150d);
+        Neighbor neighbor5 = new Neighbor(dummy1, 150d);
 
         LabeledTrainingInstance dummy6 = new LabeledTrainingInstance(null, "Boat");
-        Neighboor neighboor6  = new Neighboor(dummy1, 170d);
+        Neighbor neighbor6 = new Neighbor(dummy1, 170d);
 
-        List<Neighboor> neighboors = Arrays.asList(neighboor1, neighboor2, neighboor3, neighboor4, neighboor5, neighboor6);
+        List<Neighbor> neighbors = Arrays.asList(neighbor1, neighbor2, neighbor3, neighbor4, neighbor5, neighbor6);
         classifier.setK(2);
 
 
@@ -149,6 +149,16 @@ public class SimpleKNNClassifierTest {
 
         Truth.assertThat(predictedInstance.getScore())
                 .isEqualTo((double)6/100);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void when_similarNeighbors_its_called_with_null_neighbors_args_it_should_raise_an_exception(){
+        classifier.similarNeighbors(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void when_similarNeighbors_its_called_with_empty_neighbors_features_should_raise_an_exception(){
+        classifier.similarNeighbors(new Neighbor(null, 0d));
     }
 
 

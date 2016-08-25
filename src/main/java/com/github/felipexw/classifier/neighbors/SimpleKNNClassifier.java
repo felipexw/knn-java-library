@@ -13,13 +13,15 @@ import java.util.*;
  */
 public class SimpleKNNClassifier extends Classifier {
     private int k;
+    private byte kFolds;
     private double[][] features;
     private List<LabeledTrainingInstance> instances;
     private SimilarityCalculator similarityCalculator;
 
     public SimpleKNNClassifier(SimilarityCalculator similarityCalculator) {
         this.similarityCalculator = similarityCalculator;
-        k = 10;
+        k = 5;
+        kFolds = 10;
     }
 
     @Override
@@ -30,12 +32,11 @@ public class SimpleKNNClassifier extends Classifier {
         this.instances = instances;
     }
 
-    public void setK(int k) {
-        this.k = k;
-    }
+    public List<Neighbor> similarNeighbors(Neighbor neighbor){
+        if (neighbor == null  || neighbor.getInstance() == null )
+            throw new IllegalArgumentException("Neighboor can't be invalid");
 
-    public int getK() {
-        return k;
+        return null;
     }
 
     @Override
@@ -43,24 +44,28 @@ public class SimpleKNNClassifier extends Classifier {
         if (labeledInstance == null)
             throw new IllegalArgumentException("Instance to predict can't be null");
 
-        List<Neighboor> neighboorses = new ArrayList<>();
+        List<Neighbor> neighbors = getKNearestNeighbors(getAllNeighbors(labeledInstance));
+        return vote(neighbors);
+    }
+
+    private List<Neighbor> getAllNeighbors(LabeledTrainingInstance labeledInstance) {
+        List<Neighbor> neighborses = new ArrayList<>();
         for (short i = 0; i < instances.size(); i++) {
             LabeledTrainingInstance trainingInstance = instances.get(i);
             double distance = similarityCalculator.calculate(labeledInstance.getFeatures(), trainingInstance.getFeatures());
 
-            Neighboor neighboor = new Neighboor(trainingInstance, distance);
-            neighboorses.add(neighboor);
+            Neighbor neighbor = new Neighbor(trainingInstance, distance);
+            neighborses.add(neighbor);
         }
-
-        neighboorses = getKNearestNeighbors(neighboorses);
-        return vote(neighboorses);
+        return neighborses;
     }
 
-    public PredictedInstance vote(List<Neighboor> neighboors) {
+
+    public PredictedInstance vote(List<Neighbor> neighbors) {
         Map<String, Integer> votes = new HashMap<>();
 
-        for (Neighboor neighboor : neighboors) {
-            LabeledInstance instance = neighboor.getInstance();
+        for (Neighbor neighbor : neighbors) {
+            LabeledInstance instance = neighbor.getInstance();
             if (!votes.containsKey(instance.getLabel()))
                 votes.put(instance.getLabel(), 1);
 
@@ -72,11 +77,11 @@ public class SimpleKNNClassifier extends Classifier {
         }
 
         String mostVotedLabel = getMostVotedLabel(votes);
-        int nearestNeighboorIndex = getIndexOfNearestNeighboorVoted(mostVotedLabel, neighboors);
-        Neighboor neighboor = neighboors.get(nearestNeighboorIndex);
+        int nearestNeighborIndex = getIndexOfNearestNeighboorVoted(mostVotedLabel, neighbors);
+        Neighbor neighbor = neighbors.get(nearestNeighborIndex);
 
 
-        return new PredictedInstance(mostVotedLabel, neighboor.getDistance()/100);
+        return new PredictedInstance(mostVotedLabel, neighbor.getDistance() / 100);
     }
 
     private String getMostVotedLabel(Map<String, Integer> votes) {
@@ -85,9 +90,9 @@ public class SimpleKNNClassifier extends Classifier {
 
         String label = "";
 
-        for(String key: keys){
-            if (votes.get(key)  > count){
-                count =  votes.get(key);
+        for (String key : keys) {
+            if (votes.get(key) > count) {
+                count = votes.get(key);
                 label = key;
             }
         }
@@ -95,15 +100,15 @@ public class SimpleKNNClassifier extends Classifier {
         return label;
     }
 
-    private int getIndexOfNearestNeighboorVoted(String label, List<Neighboor> neighboors) {
+    private int getIndexOfNearestNeighboorVoted(String label, List<Neighbor> neighbors) {
         double distance = Integer.MAX_VALUE;
-        int index =0;
+        int index = 0;
 
-        for (int i =0; i < neighboors.size(); i++) {
-            Neighboor neighboor = neighboors.get(i);
-            LabeledInstance instance = neighboor.getInstance();
-            if (instance.getLabel().equalsIgnoreCase(label) && neighboor.getDistance() < distance){
-                distance = neighboor.getDistance();
+        for (int i = 0; i < neighbors.size(); i++) {
+            Neighbor neighbor = neighbors.get(i);
+            LabeledInstance instance = neighbor.getInstance();
+            if (instance.getLabel().equalsIgnoreCase(label) && neighbor.getDistance() < distance) {
+                distance = neighbor.getDistance();
                 index = i;
             }
         }
@@ -112,22 +117,33 @@ public class SimpleKNNClassifier extends Classifier {
     }
 
 
-    private List<Neighboor> getKNearestNeighbors(List<Neighboor> neighboors) {
-        Collections.sort(neighboors, (nei1, nei2) -> {
+    private List<Neighbor> getKNearestNeighbors(List<Neighbor> neighbors) {
+        Collections.sort(neighbors, (nei1, nei2) -> {
             if (nei2.getDistance() > nei1.getDistance())
                 return -1;
             return 0;
         });
 
-        if (neighboors.size() > k)
-            return neighboors.subList(0, k);
+        if (neighbors.size() > k)
+            return neighbors.subList(0, k);
 
-        return neighboors;
+        return neighbors;
     }
 
     public double[][] getFeatures() {
         return features;
     }
 
+    public void setkFolds(byte kFolds) {
+        this.kFolds = kFolds;
+    }
+
+    public void setK(int k) {
+        this.k = k;
+    }
+
+    public int getK() {
+        return k;
+    }
 
 }
