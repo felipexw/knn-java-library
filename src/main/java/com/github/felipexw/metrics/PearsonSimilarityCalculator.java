@@ -5,6 +5,16 @@ package com.github.felipexw.metrics;
  */
 public class PearsonSimilarityCalculator implements SimilarityCalculator {
 
+    /**
+     *
+     * @param a feature vector from datapoint 1
+     * @param b feature vector from datapoint 2
+     * @return the pearon correlation among them.
+     *          the correlation will be among -1 and 1 (the more close to 1, the better):
+     *              * 1 means the datapoints are perfect correlated.
+     *              * -1 means the datapoints inversaly proportional. In other words, while 1 datapoint increase, the other decrease.
+     *              * 0  means the datapoints doesn't have a correlation among them.
+     */
     @Override
     public double calculate(double[] a, double[] b) {
         if (a == null || a.length == 0)
