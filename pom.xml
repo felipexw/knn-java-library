@@ -16,6 +16,12 @@
             <version>${tapestry-release-version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+
         <!-- Include the Log4j implementation for the SLF4J logging framework -->
         <dependency>
             <groupId>org.slf4j</groupId>
