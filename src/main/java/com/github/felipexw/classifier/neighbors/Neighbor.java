@@ -29,19 +29,12 @@ public class Neighbor {
 
         Neighbor neighbor = (Neighbor) o;
 
-        if (Double.compare(neighbor.distance, distance) != 0) return false;
         return instance.equals(neighbor.instance);
-
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = instance.hashCode();
-        temp = Double.doubleToLongBits(distance);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return instance.hashCode();
     }
 
     @Override
