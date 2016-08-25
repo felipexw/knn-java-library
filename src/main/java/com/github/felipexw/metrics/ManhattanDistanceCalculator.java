@@ -11,7 +11,7 @@ public class ManhattanDistanceCalculator implements DistanceCalculator {
         double distance = 0;
 
         for (short i = 0; i < a.length; i++) {
-            double difference = b[i] - a[i];
+            double difference = Math.abs(b[i] - a[i]);
             distance += difference;
         }
         return distance;
