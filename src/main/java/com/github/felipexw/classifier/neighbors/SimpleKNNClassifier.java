@@ -2,12 +2,11 @@ package com.github.felipexw.classifier.neighbors;
 
 import com.github.felipexw.classifier.Classifier;
 import com.github.felipexw.metrics.SimilarityCalculator;
-import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
+import com.google.common.collect.ImmutableMap;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -38,30 +37,45 @@ public class SimpleKNNClassifier extends Classifier {
         calculateFeatureSimilarities();
     }
 
+    public Map<Neighbor, List<Neighbor>> getFeatures() {
+        return ImmutableMap.copyOf(features);
+    }
+
     private void calculateFeatureSimilarities() {
-        for(int i=0; i < instances.size(); i++){
+        for (int i = 0; i < instances.size(); i++) {
             LabeledTrainingInstance instance = instances.get(i);
-            Neighbor neighbor = new Neighbor(instance, 0d);
+            Neighbor neighbor = new Neighbor(instance, -1d);
 
-            List<Neighbor> neighbors = new ArrayList<>();
-            for(int j =0; j < instances.size()-1; j++){
-                if (i != j){
-                    LabeledTrainingInstance neighborInstance = instances.get(j);
-                    double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
-                    Neighbor neighborRoot = new Neighbor(neighborInstance, similarity);
-                    neighbors.add(neighborRoot);
-                }
-            }
-
+            List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, this.k);
             features.put(neighbor, neighbors);
         }
     }
 
-    public List<Neighbor> similarNeighbors(Neighbor neighbor) {
-        if (neighbor == null || neighbor.getInstance() == null)
+    private List<Neighbor> getNeighborsWithDistanceFromARootNeighboor(Neighbor neighbor, int threshold) {
+        List<Neighbor> neighbors = new ArrayList<>();
+        LabeledTrainingInstance instance = neighbor.getInstance();
+        
+        for (int j = -1; j < instances.size()-1; j++) {
+            LabeledTrainingInstance neighborInstance = instances.get(j+1);
+            double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
+            Neighbor neighborRoot = new Neighbor(neighborInstance, similarity);
+            neighbors.add(neighborRoot);
+            if (neighbors.size() == threshold)
+                return neighbors;
+        }
+
+        return neighbors;
+    }
+
+    public List<Neighbor> similarNeighbors(LabeledTrainingInstance trainingInstance, int k) {
+        if (trainingInstance == null)
             throw new IllegalArgumentException("Neighboor can't be invalid");
 
-        return null;
+        if (features.containsKey(trainingInstance))
+            features.get(trainingInstance);
+
+        Neighbor neighbor1 = new Neighbor(trainingInstance, -1d);
+        return getNeighborsWithDistanceFromARootNeighboor(neighbor1, k);
     }
 
     @Override
@@ -82,6 +96,7 @@ public class SimpleKNNClassifier extends Classifier {
             Neighbor neighbor = new Neighbor(trainingInstance, distance);
             neighborses.add(neighbor);
         }
+
         return neighborses;
     }
 
