@@ -112,7 +112,7 @@ public class SimpleKNNClassifier extends Classifier {
     }
 
 
-    public List<Neighboor> getKNearestNeighbors(List<Neighboor> neighboors) {
+    private List<Neighboor> getKNearestNeighbors(List<Neighboor> neighboors) {
         Collections.sort(neighboors, (nei1, nei2) -> {
             if (nei2.getDistance() > nei1.getDistance())
                 return -1;

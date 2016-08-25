@@ -56,35 +56,6 @@ public class SimpleKNNClassifierTest {
     }
 
 
-    @Test
-    public void it_should_calculate_the_2_nearest_neighboors(){
-        LabeledTrainingInstance dummy1 = new LabeledTrainingInstance(null, "Car");
-        Neighboor neighboor1  = new Neighboor(dummy1, 12d);
-
-        LabeledTrainingInstance dummy2 = new LabeledTrainingInstance(null, "Car");
-        Neighboor neighboor2  = new Neighboor(dummy1, 15d);
-
-        LabeledTrainingInstance dummy3 = new LabeledTrainingInstance(null, "Car");
-        Neighboor neighboor3  = new Neighboor(dummy1, 30d);
-
-        LabeledTrainingInstance dummy4 = new LabeledTrainingInstance(null, "Boat");
-        Neighboor neighboor4  = new Neighboor(dummy1, 50d);
-
-        LabeledTrainingInstance dummy5 = new LabeledTrainingInstance(null, "Boat");
-        Neighboor neighboor5  = new Neighboor(dummy1, 150d);
-
-        LabeledTrainingInstance dummy6 = new LabeledTrainingInstance(null, "Boat");
-        Neighboor neighboor6  = new Neighboor(dummy1, 170d);
-
-        List<Neighboor> neighboors = Arrays.asList(neighboor1, neighboor2, neighboor3, neighboor4, neighboor5, neighboor6);
-        classifier.setK(2);
-
-        List<Neighboor> found = classifier.getKNearestNeighbors(neighboors);
-        List<Neighboor> expected = Arrays.asList(neighboor1, neighboor2);
-
-        Truth.assertThat(found)
-                .containsAllIn(expected);
-    }
 
     @Test
     public void it_should_get_the_most_voted_label(){
