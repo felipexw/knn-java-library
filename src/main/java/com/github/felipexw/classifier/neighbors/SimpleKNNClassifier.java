@@ -2,11 +2,14 @@ package com.github.felipexw.classifier.neighbors;
 
 import com.github.felipexw.classifier.Classifier;
 import com.github.felipexw.metrics.SimilarityCalculator;
+import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by felipe.appio on 23/08/2016.
@@ -14,7 +17,7 @@ import java.util.*;
 public class SimpleKNNClassifier extends Classifier {
     private int k;
     private byte kFolds;
-    private double[][] features;
+    private Map<Neighbor, List<Neighbor>> features;
     private List<LabeledTrainingInstance> instances;
     private SimilarityCalculator similarityCalculator;
 
@@ -30,10 +33,32 @@ public class SimpleKNNClassifier extends Classifier {
             throw new IllegalArgumentException("Instances for training can't be null or empty.");
 
         this.instances = instances;
+        this.features = new HashMap<>();
+
+        calculateFeatureSimilarities();
     }
 
-    public List<Neighbor> similarNeighbors(Neighbor neighbor){
-        if (neighbor == null  || neighbor.getInstance() == null )
+    private void calculateFeatureSimilarities() {
+        for(int i=0; i < instances.size(); i++){
+            LabeledTrainingInstance instance = instances.get(i);
+            Neighbor neighbor = new Neighbor(instance, 0d);
+
+            List<Neighbor> neighbors = new ArrayList<>();
+            for(int j =0; j < instances.size()-1; j++){
+                if (i != j){
+                    LabeledTrainingInstance neighborInstance = instances.get(j);
+                    double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
+                    Neighbor neighborRoot = new Neighbor(neighborInstance, similarity);
+                    neighbors.add(neighborRoot);
+                }
+            }
+
+            features.put(neighbor, neighbors);
+        }
+    }
+
+    public List<Neighbor> similarNeighbors(Neighbor neighbor) {
+        if (neighbor == null || neighbor.getInstance() == null)
             throw new IllegalArgumentException("Neighboor can't be invalid");
 
         return null;
@@ -130,9 +155,6 @@ public class SimpleKNNClassifier extends Classifier {
         return neighbors;
     }
 
-    public double[][] getFeatures() {
-        return features;
-    }
 
     public void setkFolds(byte kFolds) {
         this.kFolds = kFolds;
