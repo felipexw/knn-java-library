@@ -3,7 +3,7 @@ package com.github.felipexw.metrics;
 /**
  * Created by felipe.appio on 25/08/2016.
  */
-public class ManhattanDistanceCalculator implements DistanceCalculator {
+public class ManhattanSimilarityCalculator implements SimilarityCalculator {
     @Override
     public double calculate(double[] a, double[] b) {
         if (a == null || a.length == 0)

@@ -1,12 +1,10 @@
 package com.github.felipexw.neighbors;
 
 import com.github.felipexw.classifier.Classifier;
-import com.github.felipexw.metrics.DistanceCalculator;
-import com.github.felipexw.types.Instance;
+import com.github.felipexw.metrics.SimilarityCalculator;
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
-import com.google.common.collect.Maps;
 
 import java.util.*;
 
@@ -17,10 +15,10 @@ public class SimpleKNNClassifier extends Classifier {
     private int k;
     private double[][] features;
     private List<LabeledTrainingInstance> instances;
-    private DistanceCalculator distanceCalculator;
+    private SimilarityCalculator similarityCalculator;
 
-    public SimpleKNNClassifier(DistanceCalculator distanceCalculator) {
-        this.distanceCalculator = distanceCalculator;
+    public SimpleKNNClassifier(SimilarityCalculator similarityCalculator) {
+        this.similarityCalculator = similarityCalculator;
         k = 10;
     }
 
@@ -48,7 +46,7 @@ public class SimpleKNNClassifier extends Classifier {
         List<Neighboor> neighboorses = new ArrayList<>();
         for (short i = 0; i < instances.size(); i++) {
             LabeledTrainingInstance trainingInstance = instances.get(i);
-            double distance = distanceCalculator.calculate(labeledInstance.getFeatures(), trainingInstance.getFeatures());
+            double distance = similarityCalculator.calculate(labeledInstance.getFeatures(), trainingInstance.getFeatures());
 
             Neighboor neighboor = new Neighboor(trainingInstance, distance);
             neighboorses.add(neighboor);

@@ -1,16 +1,13 @@
 import com.github.felipexw.neighbors.Neighboor;
 import com.github.felipexw.neighbors.SimpleKNNClassifier;
-import com.github.felipexw.metrics.EuclidianDistanceCalculator;
-import com.github.felipexw.types.Instance;
+import com.github.felipexw.metrics.EuclidianSimilarityCalculator;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
 import com.google.common.truth.Truth;
-import javafx.scene.control.Labeled;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,7 +18,7 @@ public class SimpleKNNClassifierTest {
 
     @Before
     public void setUp() {
-        classifier = new SimpleKNNClassifier(new EuclidianDistanceCalculator());
+        classifier = new SimpleKNNClassifier(new EuclidianSimilarityCalculator());
     }
 
     @Test
