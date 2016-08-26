@@ -12,15 +12,21 @@ public class EvaluatorMetric {
         return 0d;
     }
 
-    public double fMeasure(){
+    public double fMeasure(double[] a, double[] b){
+        if ((a == null || a.length ==1 ) ||  (b == null || b.length == 1))
+            throw new IllegalArgumentException("The args can't be invalid.");
         return 0d;
     }
 
-    public double precision(){
+    public double precision(double[] a, double[] b){
+        if ((a == null || a.length ==1 ) ||  (b == null || b.length == 1))
+            throw new IllegalArgumentException("The args can't be invalid.");
         return 0d;
     }
 
-    public double recall(){
+    public double recall(double[] a, double[] b){
+        if ((a == null || a.length ==1 ) ||  (b == null || b.length == 1))
+            throw new IllegalArgumentException("The args can't be invalid.");
         return 0d;
     }
 }

@@ -25,18 +25,33 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
         k = 5;
     }
 
+    public Map<Neighbor, List<Neighbor>> getFeatures() {
+        return ImmutableMap.copyOf(features);
+    }
+
     @Override
     public void train(List<LabeledTrainingInstance> instances) {
         setUpForTraining(instances);
         calculateFeatureSimilarities();
     }
 
-    public Map<Neighbor, List<Neighbor>> getFeatures() {
-        return ImmutableMap.copyOf(features);
-    }
-
     @Override
     public void train(List<LabeledTrainingInstance> instances, int k) {
+        setUpForTraining(instances);
+        calculateFeatureSimilaritiesWithKFold();
+    }
+
+    private void calculateFeatureSimilaritiesWithKFold() {
+        /**
+         * TODO: define an metric to calculate
+         */
+        for (int i = 0; i < instances.size(); i++) {
+            LabeledTrainingInstance instance = instances.get(i);
+            Neighbor neighbor = new Neighbor(instance, -1d);
+
+            List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, this.k);
+            features.put(neighbor, neighbors);
+        }
     }
 
     private void setUpForTraining(List<LabeledTrainingInstance> instances) {
