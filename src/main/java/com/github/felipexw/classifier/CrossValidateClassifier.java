@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface CrossValidateClassifier extends Model {
 
-    void train(List<LabeledTrainingInstance> instances, int k);
+    void train(java.util.List<LabeledTrainingInstance> instances, int k);
 }

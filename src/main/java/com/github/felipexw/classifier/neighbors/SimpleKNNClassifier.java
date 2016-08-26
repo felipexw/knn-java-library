@@ -10,7 +10,6 @@ import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.javascript.rhino.head.Evaluator;
 
 import java.util.*;
 import java.util.List;
@@ -42,42 +41,72 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
     @Override
     public void train(List<LabeledTrainingInstance> instances, int k) {
         setUpForTraining(instances);
-        calculateFeatureSimilaritiesWithKFold();
+        instances = getInstancesthatMaximizeAccuracy();
+        calculateFeatureSimilarities();
     }
 
-    private void calculateFeatureSimilaritiesWithKFold() {
+    private List<LabeledTrainingInstance> getInstancesthatMaximizeAccuracy() {
         Map<Integer, double[]> kFoldedFeatures = new HashMap<>();
 
         List<List<LabeledTrainingInstance>> partitionedInstances = Lists.partition(instances, k);
         int testIndex = 0;
 
-
         double[] accuraciesAndInstanceTestIndex = new double[k];
 
-
         while (testIndex < partitionedInstances.size()) {
+            features = new HashMap<>();
             for (int i = 0; i < partitionedInstances.size(); i++) {
                 if (i != testIndex) {
-                    features = new HashMap<>();
-
                     for (List<LabeledTrainingInstance> labeled : partitionedInstances) {
                         for (LabeledTrainingInstance instance : labeled) {
                             Neighbor neighbor = new Neighbor(instance, -1d);
 
-                            List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, this.k);
+                            List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, k);
                             features.put(neighbor, neighbors);
                         }
-
                     }
                 }
             }
 
             List<LabeledTrainingInstance> instances = getInstancesFromTrainedNeighbors();
             double accuracy = EvaluatorMetric.accuracy(instances, partitionedInstances.get(testIndex));
+            accuraciesAndInstanceTestIndex[testIndex] = accuracy;
 
             testIndex++;
         }
 
+        testIndex = getTestIndexWithGreaterAccuracy(accuraciesAndInstanceTestIndex);
+        return getTrainingLabeledInstances(partitionedInstances, testIndex);
+
+    }
+
+
+    private List<LabeledTrainingInstance> getTrainingLabeledInstances(List<List<LabeledTrainingInstance>> instances, int testIndex) {
+        List<LabeledTrainingInstance> trainingInstances = new ArrayList<>();
+
+        for (int i = 0; i < instances.size(); i++) {
+            if (i != testIndex) {
+                for (LabeledTrainingInstance instance : instances.get(testIndex))
+                    trainingInstances.add(instance);
+            }
+        }
+
+        return trainingInstances;
+    }
+
+
+    private int getTestIndexWithGreaterAccuracy(double[] accuracies) {
+        double max = Integer.MIN_VALUE;
+        int index = 0;
+
+        for (byte i = 0; i < accuracies.length; i++) {
+            if (accuracies[i] > max) {
+                max = accuracies[i];
+                index = i;
+            }
+        }
+
+        return index;
     }
 
     private List<LabeledTrainingInstance> getInstancesFromTrainedNeighbors() {
