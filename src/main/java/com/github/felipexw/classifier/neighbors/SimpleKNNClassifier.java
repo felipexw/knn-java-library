@@ -14,9 +14,8 @@ import java.util.List;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier{
+public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier {
     private int k;
-    private byte kFolds;
     private Map<Neighbor, List<Neighbor>> features;
     private List<LabeledTrainingInstance> instances;
     private SimilarityCalculator similarityCalculator;
@@ -24,22 +23,28 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier{
     public SimpleKNNClassifier(SimilarityCalculator similarityCalculator) {
         this.similarityCalculator = similarityCalculator;
         k = 5;
-        kFolds = 10;
     }
 
     @Override
     public void train(List<LabeledTrainingInstance> instances) {
-        if (instances == null || instances.isEmpty())
-            throw new IllegalArgumentException("Instances for training can't be null or empty.");
-
-        this.instances = instances;
-        this.features = new HashMap<>();
-
+        setUpForTraining(instances);
         calculateFeatureSimilarities();
     }
 
     public Map<Neighbor, List<Neighbor>> getFeatures() {
         return ImmutableMap.copyOf(features);
+    }
+
+    @Override
+    public void train(List<LabeledTrainingInstance> instances, int k) {
+    }
+
+    private void setUpForTraining(List<LabeledTrainingInstance> instances) {
+        if (instances == null || instances.isEmpty())
+            throw new IllegalArgumentException("Instances for training can't be null or empty.");
+
+        this.instances = instances;
+        this.features = new HashMap<>();
     }
 
     private void calculateFeatureSimilarities() {
@@ -55,9 +60,9 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier{
     private List<Neighbor> getNeighborsWithDistanceFromARootNeighboor(Neighbor neighbor, int threshold) {
         List<Neighbor> neighbors = new ArrayList<>();
         LabeledTrainingInstance instance = neighbor.getInstance();
-        
-        for (int j = -1; j < instances.size()-1; j++) {
-            LabeledTrainingInstance neighborInstance = instances.get(j+1);
+
+        for (int j = -1; j < instances.size() - 1; j++) {
+            LabeledTrainingInstance neighborInstance = instances.get(j + 1);
             double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
             Neighbor neighborRoot = new Neighbor(neighborInstance, similarity);
             neighbors.add(neighborRoot);
@@ -172,20 +177,11 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier{
     }
 
 
-    public void setkFolds(byte kFolds) {
-        this.kFolds = kFolds;
-    }
-
     public void setK(int k) {
         this.k = k;
     }
 
     public int getK() {
         return k;
-    }
-
-    @Override
-    public void train(List<LabeledTrainingInstance> instances, int k) {
-
     }
 }
