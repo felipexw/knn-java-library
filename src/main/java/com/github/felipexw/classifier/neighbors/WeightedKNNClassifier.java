@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by felipe.appio on 25/08/2016.
  */
-public class WeightedKNNClassifier extends Classifier{
+public class WeightedKNNClassifier implements Classifier{
 
     @Override
     public void train(List<LabeledTrainingInstance> instances) {
