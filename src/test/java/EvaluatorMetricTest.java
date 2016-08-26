@@ -1,6 +1,12 @@
 import com.github.felipexw.evaluations.EvaluatorMetric;
+import com.github.felipexw.types.LabeledTrainingInstance;
+import com.google.common.collect.Lists;
+import com.google.common.truth.Truth;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by felipe.appio on 26/08/2016.
@@ -21,7 +27,9 @@ public class EvaluatorMetricTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void when_accuracy_evaluator_its_called_with_empty_args_it_should_raise_an_exception(){
-        evalutor.accuracy(new double[1], new double[1]);
+        LabeledTrainingInstance instance1 = new LabeledTrainingInstance(new double[1], null);
+        LabeledTrainingInstance instance2 = new LabeledTrainingInstance(new double[1], null);
+//        evalutor.accuracy(instance1, instance2);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -52,5 +60,30 @@ public class EvaluatorMetricTest {
     @Test(expected = IllegalArgumentException.class)
     public void when_fMeasure_evaluator_its_called_with_empty_args_it_should_raise_an_exception(){
         evalutor.fMeasure(new double[1], new double[1]);
+    }
+
+    @Test
+    public void guava_test(){
+        List<String> strs = Arrays.asList("1", "2", "34", "123", "!23", "2354", "!@#!@#",
+                "!@#!@#", "!@#!@#!@#", "!@#!@#!@#",
+                "1", "2", "34", "123", "!23", "2354", "!@#!@#",
+                "!@#!@#", "!@#!@#!@#", "!@#!@#!@#",
+                "1", "2", "34", "123", "!23", "2354", "!@#!@#",
+                "!@#!@#", "!@#!@#!@#", "!@#!@#!@#", "!@#!@#!@#", "!@#!@#!@#!@#", "!@#!@#!@#!@#!@#", "!@#!@#!@#");
+        int k = 10;
+        int amount = Math.round(strs.size()/k);
+        List<List<String>> results = Lists.partition(strs, k);
+        System.out.println("results" + results.size());
+//        Truth.assertThat(results.size())
+//                .isEqualTo(2);
+
+        for(List<String> lists: results){
+            for(String s: lists){
+//                System.out.println(s);
+            }
+        }
+
+        System.out.println(strs.size());
+
     }
 }

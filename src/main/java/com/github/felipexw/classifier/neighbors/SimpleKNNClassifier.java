@@ -2,11 +2,15 @@ package com.github.felipexw.classifier.neighbors;
 
 import com.github.felipexw.classifier.Classifier;
 import com.github.felipexw.classifier.CrossValidateClassifier;
+import com.github.felipexw.evaluations.EvaluatorMetric;
 import com.github.felipexw.metrics.SimilarityCalculator;
+import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import com.google.javascript.rhino.head.Evaluator;
 
 import java.util.*;
 import java.util.List;
@@ -42,17 +46,53 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
     }
 
     private void calculateFeatureSimilaritiesWithKFold() {
-        /**
-         * TODO: define an metric to calculate
-         */
-        for (int i = 0; i < instances.size(); i++) {
-            LabeledTrainingInstance instance = instances.get(i);
-            Neighbor neighbor = new Neighbor(instance, -1d);
+        Map<Integer, double[]> kFoldedFeatures = new HashMap<>();
 
-            List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, this.k);
-            features.put(neighbor, neighbors);
+        List<List<LabeledTrainingInstance>> partitionedInstances = Lists.partition(instances, k);
+        int testIndex = 0;
+
+
+        double[] accuraciesAndInstanceTestIndex = new double[k];
+
+
+        while (testIndex < partitionedInstances.size()) {
+            for (int i = 0; i < partitionedInstances.size(); i++) {
+                if (i != testIndex) {
+                    features = new HashMap<>();
+
+                    for (List<LabeledTrainingInstance> labeled : partitionedInstances) {
+                        for (LabeledTrainingInstance instance : labeled) {
+                            Neighbor neighbor = new Neighbor(instance, -1d);
+
+                            List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, this.k);
+                            features.put(neighbor, neighbors);
+                        }
+
+                    }
+                }
+            }
+
+            List<LabeledTrainingInstance> instances = getInstancesFromTrainedNeighbors();
+            double accuracy = EvaluatorMetric.accuracy(instances, partitionedInstances.get(testIndex));
+
+            testIndex++;
         }
+
     }
+
+    private List<LabeledTrainingInstance> getInstancesFromTrainedNeighbors() {
+        Set<Neighbor> keys = features.keySet();
+
+        List<LabeledTrainingInstance> result = new ArrayList<>();
+        for (Neighbor key : keys) {
+            List<Neighbor> neighboors = features.get(key);
+            for (Neighbor n : neighboors) {
+                result.add(n.getInstance());
+            }
+        }
+        return result;
+    }
+
 
     private void setUpForTraining(List<LabeledTrainingInstance> instances) {
         if (instances == null || instances.isEmpty())
