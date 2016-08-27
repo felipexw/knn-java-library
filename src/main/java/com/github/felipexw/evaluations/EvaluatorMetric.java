@@ -11,21 +11,21 @@ import java.util.List;
  */
 public class EvaluatorMetric {
 
-    public static double accuracy(List<LabeledTrainingInstance> a, List<LabeledTrainingInstance> b) {
-        if ((a == null || a.size() <= 1) || (b == null || b.size() <= 1))
+    public static double accuracy(List<LabeledTrainingInstance> expectedList, List<PredictedInstance> predictedList) {
+        if ((expectedList == null || expectedList.size() <= 1) || (predictedList == null || predictedList.size() <= 1))
             throw new IllegalArgumentException("The args can't be invalid.");
 
         double accuracy = 0d;
 
-        for (int i = 0; i < a.size(); i++) {
-            LabeledTrainingInstance realInstance = a.get(i);
-            LabeledTrainingInstance predictedInstance = b.get(i);
+        for (int i = 0; i < expectedList.size(); i++) {
+            LabeledTrainingInstance realInstance = expectedList.get(i);
+            PredictedInstance predictedInstance = predictedList.get(i);
 
             if (realInstance.getLabel().equalsIgnoreCase(predictedInstance.getLabel()))
                 accuracy++;
         }
 
-        return accuracy / a.size();
+        return accuracy / expectedList.size();
     }
 
     public static double fMeasure(double[] a, double[] b) {

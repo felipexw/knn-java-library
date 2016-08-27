@@ -11,6 +11,7 @@ import com.github.felipexw.types.PredictedInstance;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
+import java.sql.Array;
 import java.util.*;
 import java.util.List;
 
@@ -53,31 +54,36 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
 
         double[] accuraciesAndInstanceTestIndex = new double[k];
 
-        while (testIndex < accuraciesAndInstanceTestIndex.length) {
+        do{
             features = new HashMap<>();
-            for (int i = 0; i < partitionedInstances.size(); i++) {
-                if (i != testIndex) {
-                    for (List<LabeledTrainingInstance> labeled : partitionedInstances) {
-                        for (LabeledTrainingInstance instance : labeled) {
-                            Neighbor neighbor = new Neighbor(instance, -1d);
+            List<LabeledTrainingInstance> testIntances = new ArrayList<>();
 
+            for (int i = 0; i < partitionedInstances.size(); i++) {
+                for (List<LabeledTrainingInstance> labeled : partitionedInstances) {
+                    for (LabeledTrainingInstance instance : labeled) {
+                        if (i != testIndex) {
+                            Neighbor neighbor = new Neighbor(instance, -1d);
                             List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, k);
                             features.put(neighbor, neighbors);
+                        }
+                        else{
+                            testIntances.add(instance);
                         }
                     }
                 }
             }
 
             List<LabeledTrainingInstance> instances = getInstancesFromTrainedNeighbors();
-            double accuracy = EvaluatorMetric.accuracy(instances, partitionedInstances.get(testIndex));
+            List<PredictedInstance> predictedInstanceList = predict(testIntances);
+
+            double accuracy = EvaluatorMetric.accuracy(partitionedInstances.get(testIndex), predictedInstanceList);
             accuraciesAndInstanceTestIndex[testIndex] = accuracy;
 
             testIndex++;
-        }
+        }while(testIndex < accuraciesAndInstanceTestIndex.length-1);
 
         testIndex = getTestIndexWithGreaterAccuracy(accuraciesAndInstanceTestIndex);
         return getTrainingLabeledInstances(partitionedInstances, testIndex);
-
     }
 
 
@@ -175,6 +181,18 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
 
         List<Neighbor> neighbors = getKNearestNeighbors(getAllNeighbors(labeledInstance));
         return vote(neighbors);
+    }
+
+    @Override
+    public List<PredictedInstance> predict(List<LabeledTrainingInstance> instances) {
+        if (instances == null || instances.isEmpty())
+            throw new IllegalArgumentException("instanances can't be empty or null");
+
+        List<PredictedInstance> predictedInstanceList = new ArrayList<>();
+        for(LabeledTrainingInstance instance: instances)
+            predictedInstanceList.add(predict(instance));
+
+        return predictedInstanceList;
     }
 
     private List<Neighbor> getAllNeighbors(LabeledTrainingInstance labeledInstance) {

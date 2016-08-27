@@ -3,14 +3,13 @@ import com.github.felipexw.classifier.neighbors.SimpleKNNClassifier;
 import com.github.felipexw.metrics.EuclidianSimilarityCalculator;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
+import com.google.common.truth.Expect;
 import com.google.common.truth.Truth;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by felipe.appio on 24/08/2016.
@@ -21,11 +20,6 @@ public class SimpleKNNClassifierTest {
     @Before
     public void setUp() {
         classifier = new SimpleKNNClassifier(new EuclidianSimilarityCalculator());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void when_predict_method_its_called_with_invalid_args_it_should_raise_an_exception_(){
-        classifier.predict(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -198,9 +192,14 @@ public class SimpleKNNClassifierTest {
 
         PredictedInstance predictedInstance1 = classifier.predict(pointF);
         Truth.assertThat(predictedInstance.getLabel())
-                .equals(negativeLabel);
+                .isEqualTo(positiveLabel);
         Truth.assertThat(predictedInstance.getScore())
-                .equals(scoreExpected);
+                .isEqualTo(scoreExpected);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void it_should_raise_an_exception_when_predict_list_method_its_called(){
+        classifier.predict(Collections.emptyList());
     }
 
 }

@@ -23,6 +23,11 @@ public class WeightedKNNClassifier implements Classifier, CrossValidateClassifie
     }
 
     @Override
+    public List<PredictedInstance> predict(List<LabeledTrainingInstance> instance) {
+        return null;
+    }
+
+    @Override
     public void train(List<LabeledTrainingInstance> instances, int k) {
 
     }
