@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by felipe.appio on 24/08/2016.
@@ -167,6 +168,39 @@ public class SimpleKNNClassifierTest {
 
         Truth.assertThat(similarNeighbors)
                 .containsAllIn(Arrays.asList(n1, n2));
+    }
+
+    @Test
+    public void when_trained_with_k_fold_it_should_predict_a_positive_label(){
+        /*
+        given a set of negative points:
+           -    A(2,4); B(3,2); C(4,4)
+        and a set of positive points:
+           -    D(4,1); E(5,5); F(6,3)
+        the algorithm must predict the label (which its positive or negative) for the point G(10,7)
+         */
+        String positiveLabel = "positive";
+        String negativeLabel = "negative";
+
+        LabeledTrainingInstance pointA = new LabeledTrainingInstance(new double[]{2d, 4d}, negativeLabel);
+        LabeledTrainingInstance pointB = new LabeledTrainingInstance(new double[]{3d, 2d}, negativeLabel);
+        LabeledTrainingInstance pointC = new LabeledTrainingInstance(new double[]{4, 4d}, negativeLabel);
+
+        LabeledTrainingInstance pointD = new LabeledTrainingInstance(new double[]{4d, 1d}, positiveLabel);
+        LabeledTrainingInstance pointE = new LabeledTrainingInstance(new double[]{5d, 5d}, positiveLabel);
+        LabeledTrainingInstance pointF = new LabeledTrainingInstance(new double[]{6d, 3d}, positiveLabel);
+
+        classifier.setK(3);
+        classifier.train(Arrays.asList(pointA, pointB, pointC, pointD, pointE, pointF), 3);
+
+        double scoreExpected = Math.sqrt(29)/100;
+        PredictedInstance predictedInstance = new PredictedInstance(positiveLabel, scoreExpected);
+
+        PredictedInstance predictedInstance1 = classifier.predict(pointF);
+        Truth.assertThat(predictedInstance.getLabel())
+                .equals(negativeLabel);
+        Truth.assertThat(predictedInstance.getScore())
+                .equals(scoreExpected);
     }
 
 }

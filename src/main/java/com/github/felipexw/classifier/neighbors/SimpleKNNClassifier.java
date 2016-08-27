@@ -28,7 +28,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
         k = 5;
     }
 
-    public Map<Neighbor, List<Neighbor>> getFeatures() {
+        public Map<Neighbor, List<Neighbor>> getFeatures() {
         return ImmutableMap.copyOf(features);
     }
 
@@ -48,12 +48,12 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
     private List<LabeledTrainingInstance> getInstancesthatMaximizeAccuracy() {
         Map<Integer, double[]> kFoldedFeatures = new HashMap<>();
 
-        List<List<LabeledTrainingInstance>> partitionedInstances = Lists.partition(instances, k);
+        List<List<LabeledTrainingInstance>> partitionedInstances = Lists.partition(instances, instances.size()/k);
         int testIndex = 0;
 
         double[] accuraciesAndInstanceTestIndex = new double[k];
 
-        while (testIndex < partitionedInstances.size()) {
+        while (testIndex < accuraciesAndInstanceTestIndex.length) {
             features = new HashMap<>();
             for (int i = 0; i < partitionedInstances.size(); i++) {
                 if (i != testIndex) {
