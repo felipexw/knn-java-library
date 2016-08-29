@@ -1,20 +1,24 @@
 package com.github.felipexw.util;
 
+import java.util.List;
+
 /**
  * Created by felipe.appio on 23/08/2016.
  */
 public class StringEncoder extends Encoder {
-    @Override
-    public int encode(String word) {
-        int encondedValue  = 0;
 
-        for(int i =0; i < word.length(); i++){
-            for( byte j = 0; j < VALUES.length; j++){
-                String c = String.valueOf(word.charAt(i));
-                if (c.equalsIgnoreCase(VALUES[j]))
-                    encondedValue += (j+1);
-            }
-        }
-        return encondedValue;
+  @Override public double[] encodeFromList(List<String> words) {
+    double[] encodedValues = new double[words.size()];
+
+    for (int i = 0; i < words.size(); i++) {
+      String word = words.get(i);
+      encodedValues[i] = word.hashCode();
     }
+
+    return encodedValues;
+  }
+
+  @Override public double encode(String word) {
+    return word.hashCode();
+  }
 }
