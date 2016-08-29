@@ -6,7 +6,7 @@ package com.github.felipexw.metrics;
 public class EuclidianSimilarityCalculator implements SimilarityCalculator {
     @Override
     public double calculate(double[] a, double[] b) {
-        if (a == null || a.length == 0)
+        if (a == null || a.length == 0 || (a.length != b.length))
             throw new IllegalArgumentException("The params can't be null or empty.");
         double distance = 0;
 
