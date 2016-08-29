@@ -35,7 +35,7 @@ public class LabeledTrainingInstance extends LabeledInstance{
     @Override
     public String toString() {
         return "LabeledTrainingInstance{" +
-                "features=" + Arrays.toString(features) +
+                "posterioriProbs=" + Arrays.toString(features) +
                 '}';
     }
 }

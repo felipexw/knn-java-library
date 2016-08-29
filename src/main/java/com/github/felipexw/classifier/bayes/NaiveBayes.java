@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by felipe.appio on 29/08/2016.
  */
 public abstract class NaiveBayes {
-  protected Map<Double, List<LabeledInstance>> features;
+  protected Map<Double, List<LabeledInstance>> posterioriProbs;
   protected Map<String, Double> prioriProbs;
   protected Map<String, Integer> labels;
 
