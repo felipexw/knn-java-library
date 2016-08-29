@@ -1,7 +1,4 @@
-import com.github.felipexw.metrics.PearsonSimilarityCalculator;
-import com.github.felipexw.metrics.SimilarityCalculator;
-import com.github.felipexw.metrics.EuclidianSimilarityCalculator;
-import com.github.felipexw.metrics.ManhattanSimilarityCalculator;
+import com.github.felipexw.metrics.*;
 import com.google.common.truth.Truth;
 import org.junit.Test;
 
@@ -45,6 +42,12 @@ public class SimilarityCalculatorCalculatorTest {
         double expected = 42d;
 
         Truth.assertThat(found).isEqualTo(expected);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void when_calculate_the_jaccard_distance_with_invalid_args_it_should_raise_an_exception(){
+        SimilarityCalculator similarityCalculator = new JaccardSimilarityCalculator();
+        similarityCalculator.calculate(null, null);
     }
 
 
