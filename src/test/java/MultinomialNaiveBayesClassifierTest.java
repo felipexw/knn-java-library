@@ -1,8 +1,6 @@
-import com.github.felipexw.classifier.Classifier;
 import com.github.felipexw.classifier.bayes.MultinomialNaiveBayesClassifier;
 import com.github.felipexw.classifier.bayes.NaiveBayes;
 import com.github.felipexw.types.LabeledTrainingInstance;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +31,7 @@ public class MultinomialNaiveBayesClassifierTest {
             new LabeledTrainingInstance(new double[] {2}, negativeLabel),
             new LabeledTrainingInstance(new double[] {2}, positiveLabel));
 
-    Map<String, Integer> probs = naiveBayesClassifier.calculateAPrioriProbs(training);
+    Map<String, Double> probs = naiveBayesClassifier.getPrioriProbs();
 
     assertThat(probs.get(negativeLabel))
         .isEqualTo(2);
