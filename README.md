@@ -3,7 +3,7 @@
 ### What is this repository for? ###
 
 * Its a very simple implementation of K-Nearest Neighbor algorithm for Supervide Learning (user labeled data)
-* Version 1.0
+* __Version 1.0__
 
 ### Features presents ###
 
@@ -21,8 +21,8 @@
 
 * Just clone the project
 * Setup your project
-* Init a SimpleKNNClassifier
-* Inject the SimilarityCalculator of your choice into SimpleKNNClassifier instance
+* Init a ``SimpleKNNClassifier``
+* Inject the ``SimilarityCalculator`` of your choice into ``SimpleKNNClassifier`` instance
 * Fit with some labeled data
 * Train the classifier (you can choose if you want to train using k-fold cross validation or not)
-* Pass some data to predict() method and see the label predicted
+* Pass some data to ``predict()`` method and see the label predicted
