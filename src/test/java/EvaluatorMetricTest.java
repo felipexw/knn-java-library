@@ -26,13 +26,6 @@ public class EvaluatorMetricTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void when_accuracy_evaluator_its_called_with_empty_args_it_should_raise_an_exception(){
-        LabeledTrainingInstance instance1 = new LabeledTrainingInstance(new double[1], null);
-        LabeledTrainingInstance instance2 = new LabeledTrainingInstance(new double[1], null);
-//        evalutor.accuracy(instance1, instance2);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
     public void when_precision_evaluator_its_called_with_null_args_it_should_raise_an_exception(){
         evalutor.precision(null, null);
     }
