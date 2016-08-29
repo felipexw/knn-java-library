@@ -19,10 +19,10 @@ import java.util.List;
  * Created by felipe.appio on 23/08/2016.
  */
 public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier {
-    private int k;
-    private Map<Neighbor, List<Neighbor>> features;
-    private List<LabeledTrainingInstance> instances;
-    private SimilarityCalculator similarityCalculator;
+    protected int k;
+    protected Map<Neighbor, List<Neighbor>> features;
+    protected List<LabeledTrainingInstance> instances;
+    protected SimilarityCalculator similarityCalculator;
 
     public SimpleKNNClassifier(SimilarityCalculator similarityCalculator) {
         this.similarityCalculator = similarityCalculator;
@@ -46,9 +46,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
         calculateFeatureSimilarities();
     }
 
-    private List<LabeledTrainingInstance> getInstancesthatMaximizeAccuracy() {
-        Map<Integer, double[]> kFoldedFeatures = new HashMap<>();
-
+    protected List<LabeledTrainingInstance> getInstancesthatMaximizeAccuracy() {
         List<List<LabeledTrainingInstance>> partitionedInstances = Lists.partition(instances, instances.size()/k);
         int testIndex = 0;
 
@@ -87,7 +85,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
     }
 
 
-    private List<LabeledTrainingInstance> getTrainingLabeledInstances(List<List<LabeledTrainingInstance>> instances, int testIndex) {
+    protected List<LabeledTrainingInstance> getTrainingLabeledInstances(List<List<LabeledTrainingInstance>> instances, int testIndex) {
         List<LabeledTrainingInstance> trainingInstances = new ArrayList<>();
 
         for (int i = 0; i < instances.size(); i++) {
@@ -101,7 +99,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
     }
 
 
-    private int getTestIndexWithGreaterAccuracy(double[] accuracies) {
+    protected int getTestIndexWithGreaterAccuracy(double[] accuracies) {
         double max = Integer.MIN_VALUE;
         int index = 0;
 
@@ -129,7 +127,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
     }
 
 
-    private void setUpForTraining(List<LabeledTrainingInstance> instances) {
+    protected void setUpForTraining(List<LabeledTrainingInstance> instances) {
         if (instances == null || instances.isEmpty())
             throw new IllegalArgumentException("Instances for training can't be null or empty.");
 
@@ -137,7 +135,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
         this.features = new HashMap<>();
     }
 
-    private void calculateFeatureSimilarities() {
+    protected void calculateFeatureSimilarities() {
         for (int i = 0; i < instances.size(); i++) {
             LabeledTrainingInstance instance = instances.get(i);
             Neighbor neighbor = new Neighbor(instance, -1d);
@@ -147,7 +145,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
         }
     }
 
-    private List<Neighbor> getNeighborsWithDistanceFromARootNeighboor(Neighbor neighbor, int threshold) {
+    protected List<Neighbor> getNeighborsWithDistanceFromARootNeighboor(Neighbor neighbor, int threshold) {
         List<Neighbor> neighbors = new ArrayList<>();
         LabeledTrainingInstance instance = neighbor.getInstance();
 
@@ -195,7 +193,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
         return predictedInstanceList;
     }
 
-    private List<Neighbor> getAllNeighbors(LabeledTrainingInstance labeledInstance) {
+    protected List<Neighbor> getAllNeighbors(LabeledTrainingInstance labeledInstance) {
         List<Neighbor> neighborses = new ArrayList<>();
         for (short i = 0; i < instances.size(); i++) {
             LabeledTrainingInstance trainingInstance = instances.get(i);
@@ -232,7 +230,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
         return new PredictedInstance(mostVotedLabel, neighbor.getDistance() / 100);
     }
 
-    private String getMostVotedLabel(Map<String, Integer> votes) {
+    protected String getMostVotedLabel(Map<String, Integer> votes) {
         Set<String> keys = votes.keySet();
         int count = Integer.MIN_VALUE;
 
@@ -248,7 +246,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
         return label;
     }
 
-    private int getIndexOfNearestNeighboorVoted(String label, List<Neighbor> neighbors) {
+    protected int getIndexOfNearestNeighboorVoted(String label, List<Neighbor> neighbors) {
         double distance = Integer.MAX_VALUE;
         int index = 0;
 
@@ -265,7 +263,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier 
     }
 
 
-    private List<Neighbor> getKNearestNeighbors(List<Neighbor> neighbors) {
+    protected List<Neighbor> getKNearestNeighbors(List<Neighbor> neighbors) {
         Collections.sort(neighbors, (nei1, nei2) -> {
             if (nei2.getDistance() > nei1.getDistance())
                 return -1;
