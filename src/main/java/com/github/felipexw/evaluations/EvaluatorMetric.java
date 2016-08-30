@@ -1,6 +1,5 @@
 package com.github.felipexw.evaluations;
 
-import com.github.felipexw.classifier.neighbors.Neighbor;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
 

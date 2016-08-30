@@ -1,4 +1,4 @@
-package com.github.felipexw.classifier.bayes;
+package com.github.felipexw.classifiers.bayes;
 
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.LabeledTrainingInstance;

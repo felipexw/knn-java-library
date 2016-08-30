@@ -1,5 +1,5 @@
-import com.github.felipexw.classifier.bayes.MultinomialNaiveBayesClassifier;
-import com.github.felipexw.classifier.bayes.NaiveBayes;
+import com.github.felipexw.classifiers.bayes.MultinomialNaiveBayesClassifier;
+import com.github.felipexw.classifiers.bayes.NaiveBayes;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import java.util.Arrays;
 import java.util.List;

@@ -1,12 +1,6 @@
-package com.github.felipexw.classifier.neighbors;
+package com.github.felipexw.classifiers.neighbors;
 
-import com.github.felipexw.classifier.Classifier;
-import com.github.felipexw.classifier.CrossValidateClassifier;
 import com.github.felipexw.metrics.SimilarityCalculator;
-import com.github.felipexw.types.LabeledTrainingInstance;
-import com.github.felipexw.types.PredictedInstance;
-
-import java.util.List;
 
 /**
  * Created by felipe.appio on 25/08/2016.

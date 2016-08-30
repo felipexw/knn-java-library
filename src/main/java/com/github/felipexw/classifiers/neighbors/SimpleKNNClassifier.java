@@ -1,17 +1,15 @@
-package com.github.felipexw.classifier.neighbors;
+package com.github.felipexw.classifiers.neighbors;
 
-import com.github.felipexw.classifier.Classifier;
-import com.github.felipexw.classifier.CrossValidateClassifier;
+import com.github.felipexw.classifiers.Classifier;
+import com.github.felipexw.classifiers.CrossValidateClassifier;
 import com.github.felipexw.evaluations.EvaluatorMetric;
 import com.github.felipexw.metrics.SimilarityCalculator;
-import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
-import java.sql.Array;
 import java.util.*;
 import java.util.List;
 

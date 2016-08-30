@@ -1,14 +1,12 @@
-import com.github.felipexw.classifier.neighbors.Neighbor;
-import com.github.felipexw.classifier.neighbors.SimpleKNNClassifier;
+import com.github.felipexw.classifiers.neighbors.Neighbor;
+import com.github.felipexw.classifiers.neighbors.SimpleKNNClassifier;
 import com.github.felipexw.metrics.EuclidianSimilarityCalculator;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
-import com.google.common.truth.Expect;
 import com.google.common.truth.Truth;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**

@@ -1,8 +1,7 @@
-package com.github.felipexw.classifier.bayes;
+package com.github.felipexw.classifiers.bayes;
 
-import com.github.felipexw.classifier.Classifier;
-import com.github.felipexw.classifier.CrossValidateClassifier;
-import com.github.felipexw.types.Instance;
+import com.github.felipexw.classifiers.Classifier;
+import com.github.felipexw.classifiers.CrossValidateClassifier;
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by felipe.appio on 29/08/2016.

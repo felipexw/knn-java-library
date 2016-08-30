@@ -1,9 +1,6 @@
-package com.github.felipexw.classifier;
+package com.github.felipexw.classifiers;
 
-import com.github.felipexw.classifier.Model;
 import com.github.felipexw.types.LabeledTrainingInstance;
-
-import java.util.List;
 
 /**
  * Created by felipe.appio on 26/08/2016.

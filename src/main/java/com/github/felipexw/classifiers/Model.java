@@ -1,4 +1,4 @@
-package com.github.felipexw.classifier;
+package com.github.felipexw.classifiers;
 
 import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
