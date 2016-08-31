@@ -141,7 +141,7 @@ public class SimpleKNNClassifierTest {
         and a set of positive points:
            -    D(4,1); D(5,5)
         the algorithm must predict the label (which its positive or negative) for the point E(1,3)
-         
+
         String positiveLabel = "positive";
         String negativeLabel = "negative";
 

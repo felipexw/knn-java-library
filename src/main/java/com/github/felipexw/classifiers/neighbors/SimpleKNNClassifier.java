@@ -16,11 +16,8 @@ import java.util.List;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public class SimpleKNNClassifier implements Classifier, CrossValidation {
-    protected int k;
-    protected Map<Neighbor, List<Neighbor>> features;
-    protected List<LabeledInstance> instances;
-    protected SimilarityCalculator similarityCalculator;
+public class SimpleKNNClassifier extends NeighborClassifier implements Classifier, CrossValidation {
+
 
     public SimpleKNNClassifier(SimilarityCalculator similarityCalculator) {
         this.similarityCalculator = similarityCalculator;
@@ -210,7 +207,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
         */
     }
 
-
+    @Override
     public PredictedInstance vote(List<Neighbor> neighbors) {
         Map<String, Integer> votes = new HashMap<>();
 
@@ -266,26 +263,4 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
         return index;
     }
 
-
-    protected List<Neighbor> getKNearestNeighbors(List<Neighbor> neighbors) {
-        Collections.sort(neighbors, (nei1, nei2) -> {
-            if (nei2.getDistance() > nei1.getDistance())
-                return -1;
-            return 0;
-        });
-
-        if (neighbors.size() > k)
-            return neighbors.subList(0, k);
-
-        return neighbors;
-    }
-
-
-    public void setK(int k) {
-        this.k = k;
-    }
-
-    public int getK() {
-        return k;
-    }
 }
