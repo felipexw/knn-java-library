@@ -1,3 +1,4 @@
+import com.github.felipexw.classifiers.neighbors.Neighbor;
 import com.github.felipexw.classifiers.neighbors.SimpleKNNClassifier;
 import com.github.felipexw.core.Model;
 import com.github.felipexw.core.Prediction;
@@ -79,6 +80,42 @@ public class SimpleKNNClassifierTest {
 
         Truth.assertThat(predictedInstance.getLabel())
                 .isEqualTo(negativeLabel);
+    }
+
+    @Test
+    public void when_train_its_called_it_should_calculate_the_distance_between_the_neighbors(){
+        /*
+        given a set of negative points:
+           -    A(2,4); B(3,2)
+        and a set of positive points:
+           -    D(4,1); D(5,5)
+        the algorithm must predict the label (which its positive or negative) for the point E(1,3)
+        */
+        String positiveLabel = "positive";
+        String negativeLabel = "negative";
+
+        LabeledInstance pointA = new LabeledInstance(negativeLabel, new TestModel(null, Arrays.asList(2d, 4d)));
+        LabeledInstance pointB = new LabeledInstance(negativeLabel, new TestModel(null, Arrays.asList(3d, 2d)));
+
+        LabeledInstance pointC = new LabeledInstance(positiveLabel, new TestModel(null, Arrays.asList(4d, 1d)));
+        LabeledInstance pointD = new LabeledInstance(positiveLabel, new TestModel(null, Arrays.asList(5d, 5d)));
+
+        LabeledInstance pointE = new LabeledInstance(negativeLabel, new TestModel(null, Arrays.asList(7d, 7d)));
+
+        classifier.setK(2);
+        classifier.train(Arrays.asList(pointA, pointB, pointC, pointD));
+        List<Neighbor> similarNeighbors = classifier.similarNeighbors(pointE, 2);
+
+        Neighbor n1 = new Neighbor(new LabeledInstance(null, pointA.getModel()), 0d, null);
+        Neighbor n2 = new Neighbor(new LabeledInstance(null, pointB.getModel()), 0d, null);
+
+        Truth.assertThat(similarNeighbors)
+                .containsAllIn(Arrays.asList(n1, n2));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void when_similarNeighbors_its_called_with_null_neighbors_args_it_should_raise_an_exception(){
+        classifier.similarNeighbors(null, 10);
     }
 
 }
