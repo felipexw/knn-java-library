@@ -1,4 +1,3 @@
-import com.github.felipexw.metrics.*;
 import com.google.common.truth.Truth;
 import org.junit.Test;
 
