@@ -3,16 +3,16 @@ package com.github.felipexw.types;
 /**
  * Created by felipe.appio on 24/08/2016.
  */
-public class PredictedInstance<T> extends Instance<T>{
-    private final String label;
+public class Prediction<L> {
+    private final L label;
     private final double score;
     private int count;
 
-    public String getLabel() {
+    public L getLabel() {
         return label;
     }
 
-    public PredictedInstance(String label, double score) {
+    public Prediction(L label, double score) {
         this.label = label;
         this.score = score;
     }
@@ -32,12 +32,11 @@ public class PredictedInstance<T> extends Instance<T>{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PredictedInstance)) return false;
+        if (!(o instanceof Prediction)) return false;
 
-        PredictedInstance that = (PredictedInstance) o;
+        Prediction that = (Prediction) o;
 
         return label.equals(that.label);
-
     }
 
     @Override
@@ -47,7 +46,7 @@ public class PredictedInstance<T> extends Instance<T>{
 
     @Override
     public String toString() {
-        return "PredictedInstance{" +
+        return "Prediction{" +
                 "label='" + label + '\'' +
                 ", score=" + score +
                 ", count=" + count +

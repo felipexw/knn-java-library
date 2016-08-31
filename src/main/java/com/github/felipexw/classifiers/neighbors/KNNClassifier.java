@@ -4,7 +4,7 @@ import com.github.felipexw.classifiers.Classifier;
 import com.github.felipexw.classifiers.CrossValidation;
 import com.github.felipexw.metrics.SimilarityCalculator;
 import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.PredictedInstance;
+import com.github.felipexw.types.Prediction;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +19,7 @@ public abstract class KNNClassifier implements Classifier, CrossValidation {
     protected List<LabeledInstance> instances;
     protected SimilarityCalculator similarityCalculator;
 
-    public abstract PredictedInstance vote(List<Neighbor> neighbors);
+    public abstract Prediction vote(List<Neighbor> neighbors);
 
     protected List<Neighbor> getKNearestNeighbors(List<Neighbor> neighbors) {
         Collections.sort(neighbors, (nei1, nei2) -> {

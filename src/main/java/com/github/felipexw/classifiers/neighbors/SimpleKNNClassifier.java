@@ -1,12 +1,10 @@
 package com.github.felipexw.classifiers.neighbors;
 
-import com.github.felipexw.classifiers.Classifier;
-import com.github.felipexw.classifiers.CrossValidation;
 import com.github.felipexw.evaluations.EvaluatorMetric;
 import com.github.felipexw.metrics.SimilarityCalculator;
 import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.PredictedInstance;
+import com.github.felipexw.types.Prediction;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
@@ -67,9 +65,9 @@ public class SimpleKNNClassifier extends KNNClassifier  {
             }
 
             List<LabeledInstance> instances = getInstancesFromTrainedNeighbors();
-            List<PredictedInstance> predictedInstanceList = predict(testIntances);
+            List<Prediction> predictionList = predict(testIntances);
 
-            double accuracy = EvaluatorMetric.accuracy(partitionedInstances.get(testIndex), predictedInstanceList);
+            double accuracy = EvaluatorMetric.accuracy(partitionedInstances.get(testIndex), predictionList);
             accuraciesAndInstanceTestIndex[testIndex] = accuracy;
 
             testIndex++;
@@ -171,7 +169,7 @@ public class SimpleKNNClassifier extends KNNClassifier  {
     }
 
     @Override
-    public PredictedInstance predict(Instance labeledInstance) {
+    public Prediction predict(Instance labeledInstance) {
         if (labeledInstance == null)
             throw new IllegalArgumentException("Instance to predict can't be null");
 
@@ -180,15 +178,15 @@ public class SimpleKNNClassifier extends KNNClassifier  {
     }
 
     @Override
-    public List<PredictedInstance> predict(List<Instance> instances) {
+    public List<Prediction> predict(List<Instance> instances) {
         if (instances == null || instances.isEmpty())
             throw new IllegalArgumentException("instanances can't be empty or null");
 
-        List<PredictedInstance> predictedInstanceList = new ArrayList<>();
+        List<Prediction> predictionList = new ArrayList<>();
         for(Instance instance: instances)
-            predictedInstanceList.add(predict(instance));
+            predictionList.add(predict(instance));
 
-        return predictedInstanceList;
+        return predictionList;
     }
 
     protected List<Neighbor> getAllNeighbors(Instance labeledInstance) {
@@ -208,7 +206,7 @@ public class SimpleKNNClassifier extends KNNClassifier  {
     }
 
     @Override
-    public PredictedInstance vote(List<Neighbor> neighbors) {
+    public Prediction vote(List<Neighbor> neighbors) {
         Map<String, Integer> votes = new HashMap<>();
 
         for (Neighbor neighbor : neighbors) {
@@ -228,7 +226,7 @@ public class SimpleKNNClassifier extends KNNClassifier  {
         Neighbor neighbor = neighbors.get(nearestNeighborIndex);
 
 
-        return new PredictedInstance(mostVotedLabel, neighbor.getDistance() / 100);
+        return new Prediction(mostVotedLabel, neighbor.getDistance() / 100);
     }
 
     protected String getMostVotedLabel(Map<String, Integer> votes) {

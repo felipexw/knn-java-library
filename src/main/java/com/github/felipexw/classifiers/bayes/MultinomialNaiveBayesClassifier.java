@@ -2,10 +2,9 @@ package com.github.felipexw.classifiers.bayes;
 
 import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.PredictedInstance;
+import com.github.felipexw.types.Prediction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,13 +35,13 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
     }
 
     @Override
-    public PredictedInstance predict(Instance instance) {
+    public Prediction predict(Instance instance) {
         return null;
     }
 
     @Override
-    public List<PredictedInstance> predict(List<Instance> instances) {
-        List<PredictedInstance> predictions = new ArrayList<>();
+    public List<Prediction> predict(List<Instance> instances) {
+        List<Prediction> predictions = new ArrayList<>();
 
         instances.forEach((instance) -> {
             predictions.add(predict(instance));
