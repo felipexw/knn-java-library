@@ -1,7 +1,7 @@
 package com.github.felipexw.classifiers.neighbors;
 
 import com.github.felipexw.classifiers.Classifier;
-import com.github.felipexw.classifiers.CrossValidateClassifier;
+import com.github.felipexw.classifiers.CrossValidation;
 import com.github.felipexw.evaluations.EvaluatorMetric;
 import com.github.felipexw.metrics.SimilarityCalculator;
 import com.github.felipexw.types.LabeledInstance;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public class SimpleKNNClassifier implements Classifier, CrossValidateClassifier {
+public class SimpleKNNClassifier implements Classifier, CrossValidation {
     protected int k;
     protected Map<Neighbor, List<Neighbor>> features;
     protected List<LabeledTrainingInstance> instances;

@@ -3,5 +3,9 @@ package com.github.felipexw.metrics;
 /**
  * Created by felipe.appio on 30/08/2016.
  */
-public class ChebyshevSimilarityCalculator {
+public class ChebyshevSimilarityCalculator implements  SimilarityCalculator{
+    @Override
+    public double calculate(double[] a, double[] b) {
+        return 0;
+    }
 }
