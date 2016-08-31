@@ -1,6 +1,8 @@
 import com.github.felipexw.classifiers.neighbors.Neighbor;
 import com.github.felipexw.classifiers.neighbors.SimpleKNNClassifier;
 import com.github.felipexw.metrics.EuclidianSimilarityCalculator;
+import com.github.felipexw.types.Instance;
+import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.PredictedInstance;
 import com.google.common.truth.Truth;
 import org.junit.Before;
@@ -11,6 +13,7 @@ import java.util.*;
 /**
  * Created by felipe.appio on 24/08/2016.
  */
+/*
 public class SimpleKNNClassifierTest {
     private SimpleKNNClassifier classifier;
 
@@ -74,7 +77,7 @@ public class SimpleKNNClassifierTest {
         and a set of positive points:
            -    D(4,1); D(5,5)
         the algorithm must predict the label (which its positive or negative) for the point E(1,3)
-         */
+
         String positiveLabel = "positive";
         String negativeLabel = "negative";
 
@@ -102,7 +105,7 @@ public class SimpleKNNClassifierTest {
         and a set of positive points:
            -    D(4,1); D(5,5)
         the algorithm must predict the label (which its positive or negative) for the point E(1,3)
-         */
+
         String positiveLabel = "positive";
         String negativeLabel = "negative";
 
@@ -138,7 +141,7 @@ public class SimpleKNNClassifierTest {
         and a set of positive points:
            -    D(4,1); D(5,5)
         the algorithm must predict the label (which its positive or negative) for the point E(1,3)
-         */
+         
         String positiveLabel = "positive";
         String negativeLabel = "negative";
 
@@ -169,7 +172,7 @@ public class SimpleKNNClassifierTest {
         and a set of positive points:
            -    D(4,1); E(5,5); F(6,3)
         the algorithm must predict the label (which its positive or negative) for the point G(10,7)
-         */
+
         String positiveLabel = "positive";
         String negativeLabel = "negative";
 
@@ -178,7 +181,7 @@ public class SimpleKNNClassifierTest {
         LabeledTrainingInstance pointC = new LabeledTrainingInstance(new double[]{4, 4d}, negativeLabel);
 
         LabeledTrainingInstance pointD = new LabeledTrainingInstance(new double[]{4d, 1d}, positiveLabel);
-        LabeledTrainingInstance pointE = new LabeledTrainingInstance(new double[]{5d, 5d}, positiveLabel);
+        LabeledTrainingInstance pointE = new LabeledInstance(new double[]{5d, 5d}, positiveLabel);
         LabeledTrainingInstance pointF = new LabeledTrainingInstance(new double[]{6d, 3d}, positiveLabel);
 
         classifier.setK(3);
@@ -200,3 +203,5 @@ public class SimpleKNNClassifierTest {
     }
 
 }
+
+        */

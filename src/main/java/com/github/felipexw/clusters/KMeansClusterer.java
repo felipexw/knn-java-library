@@ -1,6 +1,7 @@
 package com.github.felipexw.clusters;
 
 import com.github.felipexw.metrics.SimilarityCalculator;
+import com.github.felipexw.types.Instance;
 
 import java.util.List;
 
@@ -33,12 +34,12 @@ public class KMeansClusterer implements KMeansCluster {
     }
 
     @Override
-    public void cluster(List<UnlabeledInstance> instanceList) {
+    public void cluster(List<Instance> instanceList) {
         if (instanceList == null || instanceList.isEmpty())
             throw new IllegalArgumentException("args can't be invalid");
 
-        for(UnlabeledInstance instance: instanceList){
-            double[] features = instance.getFeatures();
+        for(Instance instance: instanceList){
+//            double[] features = instance.getFeatures();
 
         }
 

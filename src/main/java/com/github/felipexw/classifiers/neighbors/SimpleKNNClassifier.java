@@ -4,6 +4,7 @@ import com.github.felipexw.classifiers.Classifier;
 import com.github.felipexw.classifiers.CrossValidation;
 import com.github.felipexw.evaluations.EvaluatorMetric;
 import com.github.felipexw.metrics.SimilarityCalculator;
+import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.PredictedInstance;
 import com.google.common.collect.ImmutableMap;
@@ -44,18 +45,18 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
     }
 
     protected List<LabeledInstance> getInstancesthatMaximizeAccuracy() {
-        List<List<LabeledTrainingInstance>> partitionedInstances = Lists.partition(instances, instances.size()/k);
+        List<List<LabeledInstance>> partitionedInstances = Lists.partition(instances, instances.size()/k);
         int testIndex = 0;
 
         double[] accuraciesAndInstanceTestIndex = new double[k];
 
         do{
             features = new HashMap<>();
-            List<LabeledTrainingInstance> testIntances = new ArrayList<>();
+            List<Instance> testIntances = new ArrayList<>();
 
             for (int i = 0; i < partitionedInstances.size(); i++) {
-                for (List<LabeledTrainingInstance> labeled : partitionedInstances) {
-                    for (LabeledTrainingInstance instance : labeled) {
+                for (List<LabeledInstance> labeled : partitionedInstances) {
+                    for (LabeledInstance instance : labeled) {
                         if (i != testIndex) {
                             Neighbor neighbor = new Neighbor(instance, -1d);
                             List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, k);
@@ -68,7 +69,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
                 }
             }
 
-            List<LabeledTrainingInstance> instances = getInstancesFromTrainedNeighbors();
+            List<LabeledInstance> instances = getInstancesFromTrainedNeighbors();
             List<PredictedInstance> predictedInstanceList = predict(testIntances);
 
             double accuracy = EvaluatorMetric.accuracy(partitionedInstances.get(testIndex), predictedInstanceList);
@@ -82,12 +83,12 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
     }
 
 
-    protected List<LabeledTrainingInstance> getTrainingLabeledInstances(List<List<LabeledTrainingInstance>> instances, int testIndex) {
-        List<LabeledTrainingInstance> trainingInstances = new ArrayList<>();
+    protected List<LabeledInstance> getTrainingLabeledInstances(List<List<LabeledInstance>> instances, int testIndex) {
+        List<LabeledInstance> trainingInstances = new ArrayList<>();
 
         for (int i = 0; i < instances.size(); i++) {
             if (i != testIndex) {
-                for (LabeledTrainingInstance instance : instances.get(testIndex))
+                for (LabeledInstance instance : instances.get(testIndex))
                     trainingInstances.add(instance);
             }
         }
@@ -110,10 +111,10 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
         return index;
     }
 
-    private List<LabeledTrainingInstance> getInstancesFromTrainedNeighbors() {
+    private List<LabeledInstance> getInstancesFromTrainedNeighbors() {
         Set<Neighbor> keys = features.keySet();
 
-        List<LabeledTrainingInstance> result = new ArrayList<>();
+        List<LabeledInstance> result = new ArrayList<>();
         for (Neighbor key : keys) {
             List<Neighbor> neighboors = features.get(key);
             for (Neighbor n : neighboors) {
@@ -173,7 +174,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
     }
 
     @Override
-    public PredictedInstance predict(LabeledInstance labeledInstance) {
+    public PredictedInstance predict(Instance labeledInstance) {
         if (labeledInstance == null)
             throw new IllegalArgumentException("Instance to predict can't be null");
 
@@ -182,18 +183,18 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
     }
 
     @Override
-    public List<PredictedInstance> predict(List<LabeledInstance> instances) {
+    public List<PredictedInstance> predict(List<Instance> instances) {
         if (instances == null || instances.isEmpty())
             throw new IllegalArgumentException("instanances can't be empty or null");
 
         List<PredictedInstance> predictedInstanceList = new ArrayList<>();
-        for(LabeledInstance instance: instances)
+        for(Instance instance: instances)
             predictedInstanceList.add(predict(instance));
 
         return predictedInstanceList;
     }
 
-    protected List<Neighbor> getAllNeighbors(LabeledInstance labeledInstance) {
+    protected List<Neighbor> getAllNeighbors(Instance labeledInstance) {
         throw new UnsupportedOperationException("Continue the refactoring.");
         /*
         List<Neighbor> neighborses = new ArrayList<>();

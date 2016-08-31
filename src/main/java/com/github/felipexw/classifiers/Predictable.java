@@ -1,5 +1,6 @@
 package com.github.felipexw.classifiers;
 
+import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.PredictedInstance;
 
@@ -10,8 +11,8 @@ import java.util.List;
  */
 public interface Predictable {
 
-    PredictedInstance predict(LabeledInstance instance);
+    PredictedInstance predict(Instance instance);
 
-    List<PredictedInstance> predict(List<LabeledInstance> instance);
+    List<PredictedInstance> predict(List<Instance> instance);
 
 }

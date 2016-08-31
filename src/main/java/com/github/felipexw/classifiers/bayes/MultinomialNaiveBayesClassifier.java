@@ -1,5 +1,6 @@
 package com.github.felipexw.classifiers.bayes;
 
+import com.github.felipexw.types.Instance;
 import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.PredictedInstance;
 
@@ -35,12 +36,12 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
     }
 
     @Override
-    public PredictedInstance predict(LabeledInstance instance) {
+    public PredictedInstance predict(Instance instance) {
         return null;
     }
 
     @Override
-    public List<PredictedInstance> predict(List<LabeledInstance> instances) {
+    public List<PredictedInstance> predict(List<Instance> instances) {
         List<PredictedInstance> predictions = new ArrayList<>();
 
         instances.forEach((instance) -> {

@@ -13,6 +13,7 @@ import static com.google.common.truth.Truth.*;
 /**
  * Created by felipe.appio on 29/08/2016.
  */
+/*
 public class MultinomialNaiveBayesClassifierTest {
 
     private NaiveBayes classifier;
@@ -83,7 +84,7 @@ public class MultinomialNaiveBayesClassifierTest {
 
         assertThat(probs.size())
                 .isEqualTo(9);
-                */
+
 
 
 
@@ -96,3 +97,4 @@ public class MultinomialNaiveBayesClassifierTest {
 
 
 }
+*/

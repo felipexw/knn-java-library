@@ -1,5 +1,7 @@
 package com.github.felipexw.clusters;
 
+import com.github.felipexw.types.Instance;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,6 @@ import java.util.List;
  */
 public interface KMeansCluster {
 
-    void cluster(List<UnlabeledInstance> instanceList);
+    void cluster(List<Instance> instanceList);
 
 }
