@@ -28,6 +28,12 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
     @Override
     public void train(List<LabeledTrainingInstance> instances) {
         calculateProbs(instances);
+
+    }
+
+    @Override
+    public void train(List<LabeledTrainingInstance> instances, int k) {
+
     }
 
     @Override
@@ -46,13 +52,12 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
         return predictions;
     }
 
-    @Override
-    public void train(List<LabeledTrainingInstance> instances, int k) {
-
-    }
 
     @Override
     public void calculateProbs(List<LabeledTrainingInstance> instanceList) {
+        if (instanceList == null || instanceList.isEmpty())
+            throw new IllegalArgumentException("Args can't be null");
+
         for (LabeledTrainingInstance instance : instanceList) {
             if (!labels.containsKey(instance.getLabel())) {
                 labels.put(instance.getLabel(), 1);

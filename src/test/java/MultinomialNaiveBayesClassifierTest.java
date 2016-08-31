@@ -17,11 +17,11 @@ import static com.google.common.truth.Truth.*;
  */
 public class MultinomialNaiveBayesClassifierTest {
 
-    private NaiveBayes naiveBayesClassifier;
+    private NaiveBayes classifier;
 
     @Before
     public void setUp() {
-        naiveBayesClassifier = new MultinomialNaiveBayesClassifier();
+        classifier = new MultinomialNaiveBayesClassifier();
     }
 
     @Test
@@ -34,7 +34,7 @@ public class MultinomialNaiveBayesClassifierTest {
                         new LabeledTrainingInstance(new double[]{2}, negativeLabel),
                         new LabeledTrainingInstance(new double[]{2}, positiveLabel));
 
-        Map<String, Double> probs = naiveBayesClassifier.getPrioriProbs();
+        Map<String, Double> probs = classifier.getPrioriProbs();
 
         assertThat(probs.get(negativeLabel))
                 .isEqualTo(2);
@@ -66,8 +66,8 @@ public class MultinomialNaiveBayesClassifierTest {
         LabeledTrainingInstance intance3 = new LabeledTrainingInstance(featuresC, positiveLabel);
         LabeledTrainingInstance intance4 = new LabeledTrainingInstance(featuresD, positiveLabel);
 
-        naiveBayesClassifier.train(Arrays.asList(intance1, intance2, intance3, intance4));
-        Map<String, List<LabeledInstance>> probs = naiveBayesClassifier.getPosterioriProbs();;
+        classifier.train(Arrays.asList(intance1, intance2, intance3, intance4));
+        Map<String, List<LabeledInstance>> probs = classifier.getPosterioriProbs();;
 
         /*for(Double key: probs.keySet()){
 
@@ -83,6 +83,11 @@ public class MultinomialNaiveBayesClassifierTest {
         assertThat(probs.size())
                 .isEqualTo(7);
 
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void when_predict_its_called_with_invalid_args_it_should_raise_an_exception(){
+        classifier.predict(Arrays.asList());
     }
 
 
