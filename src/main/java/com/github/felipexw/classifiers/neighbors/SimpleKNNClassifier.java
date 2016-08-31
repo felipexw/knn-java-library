@@ -136,11 +136,6 @@ public class SimpleKNNClassifier extends KNNClassifier {
     }
 
     protected List<Neighbor> getNeighborsWithDistanceFromARootNeighboor(Neighbor neighbor, int threshold) {
-
-
-//        LabeledInstance<Double, String> t = new LabeledInstance<>("2");
-
-
         Neighbor nei = new Neighbor(null, 0d, featureExtractor);
         List<Neighbor> neighbors = new ArrayList<>();
 
@@ -148,10 +143,10 @@ public class SimpleKNNClassifier extends KNNClassifier {
 
         for (int j = -1; j < instances.size() - 1; j++) {
             LabeledInstance neighborInstance = instances.get(j + 1);
-//            double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
-            double similarity = 0d;
+            double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
             Neighbor neighborRoot = new Neighbor(neighborInstance, similarity, new DoubleFeatureExtractor());
             neighbors.add(neighborRoot);
+
             if (neighbors.size() == threshold)
                 return neighbors;
         }
