@@ -20,7 +20,7 @@ public class EvaluatorMetric {
             LabeledInstance realInstance = expectedList.get(i);
             PredictedInstance predictedInstance = predictedList.get(i);
 
-            if (realInstance.getLabel().equalsIgnoreCase(predictedInstance.getLabel()))
+            if (realInstance.getLabel().equals(predictedInstance.getLabel()))
                 accuracy++;
         }
 

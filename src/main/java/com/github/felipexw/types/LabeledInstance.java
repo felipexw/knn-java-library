@@ -3,16 +3,16 @@ package com.github.felipexw.types;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public class LabeledInstance<T> extends Instance<T> {
-  protected final String label;
+public class LabeledInstance<L, T> extends Instance<T> {
+  protected final L label;
   private int count;
 
-  public LabeledInstance(String label) {
+  public LabeledInstance(L label) {
     this.label = label;
   }
 
-  public String getLabel() {
-    return label;
+  public L getLabel() {
+    return this.label;
   }
 
   public void setCount(int count) {
