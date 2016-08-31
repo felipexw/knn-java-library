@@ -2,7 +2,7 @@ package com.github.felipexw.classifiers.neighbors;
 
 import com.github.felipexw.classifiers.Classifier;
 import com.github.felipexw.core.CrossValidation;
-import com.github.felipexw.metrics.SimilarityCalculator;
+import com.github.felipexw.evaluations.metrics.SimilarityCalculator;
 import com.github.felipexw.core.LabeledInstance;
 import com.github.felipexw.core.Prediction;
 

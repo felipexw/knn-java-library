@@ -1,7 +1,7 @@
 package com.github.felipexw.classifiers.neighbors;
 
 import com.github.felipexw.evaluations.EvaluatorMetric;
-import com.github.felipexw.metrics.SimilarityCalculator;
+import com.github.felipexw.evaluations.metrics.SimilarityCalculator;
 import com.github.felipexw.core.Instance;
 import com.github.felipexw.core.LabeledInstance;
 import com.github.felipexw.core.Prediction;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public class SimpleKNNClassifier extends KNNClassifier  {
+public class SimpleKNNClassifier extends KNNClassifier {
 
 
     public SimpleKNNClassifier(SimilarityCalculator similarityCalculator) {
@@ -40,12 +40,12 @@ public class SimpleKNNClassifier extends KNNClassifier  {
     }
 
     protected List<LabeledInstance> getInstancesthatMaximizeAccuracy() {
-        List<List<LabeledInstance>> partitionedInstances = Lists.partition(instances, instances.size()/k);
+        List<List<LabeledInstance>> partitionedInstances = Lists.partition(instances, instances.size() / k);
         int testIndex = 0;
 
         double[] accuraciesAndInstanceTestIndex = new double[k];
 
-        do{
+        do {
             features = new HashMap<>();
             List<Instance> testIntances = new ArrayList<>();
 
@@ -56,10 +56,8 @@ public class SimpleKNNClassifier extends KNNClassifier  {
                             Neighbor neighbor = new Neighbor(instance, -1d);
                             List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, k);
                             features.put(neighbor, neighbors);
-                        }
-                        else{
+                        } else
                             testIntances.add(instance);
-                        }
                     }
                 }
             }
@@ -71,7 +69,7 @@ public class SimpleKNNClassifier extends KNNClassifier  {
             accuraciesAndInstanceTestIndex[testIndex] = accuracy;
 
             testIndex++;
-        }while(testIndex < accuraciesAndInstanceTestIndex.length-1);
+        } while (testIndex < accuraciesAndInstanceTestIndex.length - 1);
 
         testIndex = getTestIndexWithGreaterAccuracy(accuraciesAndInstanceTestIndex);
         return getTrainingLabeledInstances(partitionedInstances, testIndex);
@@ -140,13 +138,14 @@ public class SimpleKNNClassifier extends KNNClassifier  {
 
     protected List<Neighbor> getNeighborsWithDistanceFromARootNeighboor(Neighbor neighbor, int threshold) {
         throw new UnsupportedOperationException("Continue the implementation");
-        /*
+
         List<Neighbor> neighbors = new ArrayList<>();
         LabeledInstance instance = neighbor.getInstance();
 
         for (int j = -1; j < instances.size() - 1; j++) {
             LabeledInstance neighborInstance = instances.get(j + 1);
-            double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
+//            double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
+            double similarity = 0d;
             Neighbor neighborRoot = new Neighbor(neighborInstance, similarity);
             neighbors.add(neighborRoot);
             if (neighbors.size() == threshold)
@@ -154,7 +153,7 @@ public class SimpleKNNClassifier extends KNNClassifier  {
         }
 
         return neighbors;
-        */
+
     }
 
     public List<Neighbor> similarNeighbors(LabeledInstance trainingInstance, int k) {
@@ -183,7 +182,7 @@ public class SimpleKNNClassifier extends KNNClassifier  {
             throw new IllegalArgumentException("instanances can't be empty or null");
 
         List<Prediction> predictionList = new ArrayList<>();
-        for(Instance instance: instances)
+        for (Instance instance : instances)
             predictionList.add(predict(instance));
 
         return predictionList;

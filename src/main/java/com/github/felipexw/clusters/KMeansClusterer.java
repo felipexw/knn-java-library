@@ -1,6 +1,6 @@
 package com.github.felipexw.clusters;
 
-import com.github.felipexw.metrics.SimilarityCalculator;
+import com.github.felipexw.evaluations.metrics.SimilarityCalculator;
 import com.github.felipexw.core.Instance;
 
 import java.util.List;
