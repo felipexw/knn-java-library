@@ -54,7 +54,7 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
         if (instanceList == null || instanceList.isEmpty())
             throw new IllegalArgumentException("Args can't be null");
 
-        for (LabeledInstance<Label, Model> instance : instanceList) {
+        for (LabeledInstance<Model> instance : instanceList) {
             String key = instance.getLabel().toString();
             if (!labels.containsKey(key)) {
                 labels.put(instance.getLabel().toString(), 1);
@@ -86,8 +86,8 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
          */
     }
 
-    private void countFromLabels(List<LabeledInstance<Label, Model>> instances, LabeledInstance<Label, Model> instance) {
-        for (LabeledInstance<Label, Model> featuresInstance : instances) {
+    private void countFromLabels(List<LabeledInstance<Model>> instances, LabeledInstance<Model> instance) {
+        for (LabeledInstance<Model> featuresInstance : instances) {
             if (featuresInstance.getLabel().toString().equalsIgnoreCase(instance.getLabel().toString())) {
                 featuresInstance.setCount(featuresInstance.getCount() + 1);
             } else {

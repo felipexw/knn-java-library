@@ -6,28 +6,24 @@ import java.util.Objects;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public class LabeledInstance<L extends Label, F extends Model> extends Instance<F> {
-    protected L label;
+public class LabeledInstance<F extends Model> extends Instance<F> {
+    protected String label;
     private int count;
 
-    public LabeledInstance(List<F> features,L label) {
+    public LabeledInstance(String label, F model) {
+        super(model);
         this.label = label;
-        this.features = features;
     }
 
-    public L getLabel() {
+    public String getLabel() {
         return this.label;
     }
+
 
     public void setCount(int count) {
         this.count = count;
     }
 
-    @Override
-    public List<F> getFeatures() {
-
-        return null;
-    }
 
     public int getCount() {
         return count;
@@ -38,7 +34,7 @@ public class LabeledInstance<L extends Label, F extends Model> extends Instance<
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LabeledInstance<?, ?> that = (LabeledInstance<?, ?>) o;
+        LabeledInstance<?> that = (LabeledInstance<?>) o;
 
         return label.equals(that.label);
 

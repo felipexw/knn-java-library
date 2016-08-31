@@ -142,8 +142,11 @@ public class SimpleKNNClassifier extends KNNClassifier {
         LabeledInstance instance = neighbor.getInstance();
 
         for (int j = -1; j < instances.size() - 1; j++) {
-            LabeledInstance neighborInstance = instances.get(j + 1);
-            double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
+            LabeledInstance<Model> neighborInstance = instances.get(j + 1);
+            Model<Double> model = instance.getModel();
+            Model<Double> neighborModel = neighborInstance.getModel();
+
+            double similarity = similarityCalculator.calculate(model.getData(), neighborModel.getData());
             Neighbor neighborRoot = new Neighbor(neighborInstance, similarity, new DoubleFeatureExtractor());
             neighbors.add(neighborRoot);
 
@@ -193,7 +196,7 @@ public class SimpleKNNClassifier extends KNNClassifier {
         List<Neighbor> neighborses = new ArrayList<>();
         for (short i = 0; i < instances.size(); i++) {
             LabeledInstance trainingInstance = instances.get(i);
-            double distance = similarityCalculator.calculate(labeledInstance.getFeatures(), trainingInstance.getFeatures());
+            double distance = similarityCalculator.calculate(labeledInstance.getModel().getData(), trainingInstance.getModel().getData());
 
             Neighbor neighbor = new Neighbor(trainingInstance, distance, featureExtractor);
             neighborses.add(neighbor);
@@ -207,7 +210,7 @@ public class SimpleKNNClassifier extends KNNClassifier {
         Map<String, Integer> votes = new HashMap<>();
 
         for (Neighbor neighbor : neighbors) {
-            LabeledInstance<Label, Model> instance = neighbor.getInstance();
+            LabeledInstance<Model> instance = neighbor.getInstance();
             if (!votes.containsKey(instance.getLabel()))
                 votes.put(instance.getLabel().toString(), 1);
 
@@ -221,7 +224,6 @@ public class SimpleKNNClassifier extends KNNClassifier {
         String mostVotedLabel = getMostVotedLabel(votes);
         int nearestNeighborIndex = getIndexOfNearestNeighboorVoted(mostVotedLabel, neighbors);
         Neighbor neighbor = neighbors.get(nearestNeighborIndex);
-
 
         return new Prediction(mostVotedLabel, neighbor.getDistance() / 100);
     }
@@ -248,7 +250,7 @@ public class SimpleKNNClassifier extends KNNClassifier {
 
         for (int i = 0; i < neighbors.size(); i++) {
             Neighbor neighbor = neighbors.get(i);
-            LabeledInstance<Label, Model> instance = neighbor.getInstance();
+            LabeledInstance<Model> instance = neighbor.getInstance();
             if (instance.getLabel().toString().equalsIgnoreCase(label) && neighbor.getDistance() < distance) {
                 distance = neighbor.getDistance();
                 index = i;

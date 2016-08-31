@@ -1,7 +1,4 @@
-import com.github.felipexw.classifiers.neighbors.KNNClassifier;
-import com.github.felipexw.classifiers.neighbors.Neighbor;
 import com.github.felipexw.classifiers.neighbors.SimpleKNNClassifier;
-import com.github.felipexw.core.Label;
 import com.github.felipexw.core.Model;
 import com.github.felipexw.core.Prediction;
 import com.github.felipexw.core.extraction.DoubleFeatureExtractor;
@@ -9,12 +6,9 @@ import com.github.felipexw.core.extraction.FeatureExtractor;
 import com.github.felipexw.evaluations.metrics.EuclidianSimilarityCalculator;
 import com.github.felipexw.core.LabeledInstance;
 import com.google.common.truth.Truth;
-import javafx.scene.control.Labeled;
 import org.junit.Before;
 import org.junit.Test;
-import com.google.common.truth.Truth.*;
 
-import java.sql.Array;
 import java.util.*;
 
 /**
@@ -24,9 +18,9 @@ import java.util.*;
 */
 public class SimpleKNNClassifierTest {
     static class TestModel extends Model{
-        private List<String> stringFeatures;
+        private List<Double> stringFeatures;
 
-        public TestModel(FeatureExtractor featureExtractor, List<String> stringFeatures) {
+        public TestModel(FeatureExtractor featureExtractor, List<Double> stringFeatures) {
             super(featureExtractor);
             this.features = stringFeatures;
         }
@@ -60,31 +54,31 @@ public class SimpleKNNClassifierTest {
         the algorithm must predict the label (which its positive or negative) for the point E(1,3)
         */
 
-        Label positiveLabel = new Label("positive");
-        Label negativeLabel = new Label("negative");
+        String positiveLabel = new String("positive");
+        String negativeLabel = new String("negative");
         FeatureExtractor featureExtractor =   new DoubleFeatureExtractor();
 
-        TestModel t1 = new TestModel(featureExtractor, Arrays.asList("3.0", "4.0"));
-        LabeledInstance<Label, Model> pointA = new LabeledInstance<Label, Model>(Arrays.asList(t1), negativeLabel);
+        TestModel t1 = new TestModel(featureExtractor, Arrays.asList(3d, 4d));
+        LabeledInstance<Model> pointA = new LabeledInstance<Model>(negativeLabel, t1);
 
-        TestModel t2 = new TestModel(featureExtractor, Arrays.asList("3.0", "2.0"));
-        LabeledInstance<Label, Model> pointB = new LabeledInstance<Label, Model>(Arrays.asList(t2), negativeLabel);
+        TestModel t2 = new TestModel(featureExtractor, Arrays.asList(3d, 2d));
+        LabeledInstance<Model> pointB = new LabeledInstance<Model>(negativeLabel, t2);
 
-        TestModel t3 = new TestModel(featureExtractor, Arrays.asList("4.0", "1.0"));
-        LabeledInstance<Label, Model> pointC = new LabeledInstance<Label, Model>(Arrays.asList(t3), negativeLabel);
+        TestModel t3 = new TestModel(featureExtractor, Arrays.asList(4d, 1d));
+        LabeledInstance<Model> pointC = new LabeledInstance<Model>(positiveLabel, t3);
 
-        TestModel t4 = new TestModel(featureExtractor, Arrays.asList("5.0", "5.0"));
-        LabeledInstance<Label, Model> pointD = new LabeledInstance<Label, Model>(Arrays.asList(t2), negativeLabel);
+        TestModel t4 = new TestModel(featureExtractor, Arrays.asList(50d, 5d));
+        LabeledInstance<Model> pointD = new LabeledInstance<Model>(positiveLabel, t4);
 
-        TestModel predictingTest = new TestModel(featureExtractor, Arrays.asList("1.0", "3.0"));
-        LabeledInstance<Label, Model> pointE = new LabeledInstance<Label, Model>(Arrays.asList(predictingTest), negativeLabel);
+        TestModel predictingTest = new TestModel(featureExtractor, Arrays.asList(1d, 3d));
+        LabeledInstance<Model> pointE = new LabeledInstance<Model>(negativeLabel,predictingTest);
 
         classifier.setK(5);
         classifier.train(Arrays.asList(pointA, pointB, pointC, pointD));
         Prediction predictedInstance = classifier.predict(pointE);
 
         Truth.assertThat(predictedInstance.getLabel())
-                .isEqualTo(negativeLabel);
+                .isEqualTo(positiveLabel);
     }
 
 }
