@@ -1,5 +1,7 @@
 package com.github.felipexw.evaluations.metrics;
 
+import java.util.List;
+
 /**
  * Created by felipe.appio on 25/08/2016.
  */
@@ -16,8 +18,8 @@ public class PearsonSimilarityCalculator implements SimilarityCalculator {
      *              * 0  means the datapoints doesn't have a correlation among them.
      */
     @Override
-    public double calculate(double[] a, double[] b) {
-        if (a == null || a.length == 0)
+    public double calculate(List<Double> a, List<Double> b) {
+        if (a == null || a.size() == 0)
             throw new IllegalArgumentException("The params can't be null or empty.");
         double distance = 0;
 
@@ -26,9 +28,9 @@ public class PearsonSimilarityCalculator implements SimilarityCalculator {
         double aVariance= 0;
         double bVariance = 0;
 
-        for (short i = 0; i < a.length; i++) {
-            aVariance += a[i] * avgFeaturesA;
-            bVariance += b[i] * avgFeaturesB;
+        for (short i = 0; i < a.size(); i++) {
+            aVariance += a.get(i) * avgFeaturesA;
+            bVariance += b.get(i) * avgFeaturesB;
         }
 
         double numerator = aVariance * bVariance;
@@ -37,12 +39,12 @@ public class PearsonSimilarityCalculator implements SimilarityCalculator {
         return numerator/denominator;
     }
 
-    private double getAvearageFromFeatures(double[] features){
+    private double getAvearageFromFeatures(List<Double> features){
         double average = 0;
 
-        for(int i =0; i < features.length; i++)
-            average += features[i];
+        for(int i =0; i < features.size(); i++)
+            average += features.get(i);
 
-        return average/features.length;
+        return average/features.size();
     }
 }
