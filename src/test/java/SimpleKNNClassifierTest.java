@@ -67,7 +67,7 @@ public class SimpleKNNClassifierTest {
         TestModel t3 = new TestModel(featureExtractor, Arrays.asList(4d, 1d));
         LabeledInstance<Model> pointC = new LabeledInstance<Model>(positiveLabel, t3);
 
-        TestModel t4 = new TestModel(featureExtractor, Arrays.asList(50d, 5d));
+        TestModel t4 = new TestModel(featureExtractor, Arrays.asList(5d, 5d));
         LabeledInstance<Model> pointD = new LabeledInstance<Model>(positiveLabel, t4);
 
         TestModel predictingTest = new TestModel(featureExtractor, Arrays.asList(1d, 3d));
@@ -78,7 +78,7 @@ public class SimpleKNNClassifierTest {
         Prediction predictedInstance = classifier.predict(pointE);
 
         Truth.assertThat(predictedInstance.getLabel())
-                .isEqualTo(positiveLabel);
+                .isEqualTo(negativeLabel);
     }
 
 }
