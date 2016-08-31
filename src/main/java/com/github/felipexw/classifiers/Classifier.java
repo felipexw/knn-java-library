@@ -1,6 +1,7 @@
 package com.github.felipexw.classifiers;
 
-import com.github.felipexw.types.LabeledInstance;
+import com.github.felipexw.core.Predictable;
+import com.github.felipexw.core.LabeledInstance;
 
 import java.util.List;
 

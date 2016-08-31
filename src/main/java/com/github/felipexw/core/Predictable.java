@@ -1,7 +1,4 @@
-package com.github.felipexw.classifiers;
-
-import com.github.felipexw.types.Instance;
-import com.github.felipexw.types.Prediction;
+package com.github.felipexw.core;
 
 import java.util.List;
 

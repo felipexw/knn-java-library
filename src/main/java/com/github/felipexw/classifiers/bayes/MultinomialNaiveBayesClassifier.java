@@ -1,8 +1,8 @@
 package com.github.felipexw.classifiers.bayes;
 
-import com.github.felipexw.types.Instance;
-import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.Prediction;
+import com.github.felipexw.core.Instance;
+import com.github.felipexw.core.LabeledInstance;
+import com.github.felipexw.core.Prediction;
 
 import java.util.ArrayList;
 import java.util.HashMap;

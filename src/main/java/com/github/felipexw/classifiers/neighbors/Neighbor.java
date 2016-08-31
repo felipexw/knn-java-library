@@ -1,6 +1,6 @@
 package com.github.felipexw.classifiers.neighbors;
 
-import com.github.felipexw.types.LabeledInstance;
+import com.github.felipexw.core.LabeledInstance;
 
 /**
  * Created by felipe.appio on 24/08/2016.

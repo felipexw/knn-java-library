@@ -1,4 +1,4 @@
-package com.github.felipexw.types;
+package com.github.felipexw.core;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.github.felipexw.types;
+package com.github.felipexw.core;
 
 /**
  * Created by felipe.appio on 23/08/2016.

@@ -1,10 +1,10 @@
 package com.github.felipexw.classifiers.neighbors;
 
 import com.github.felipexw.classifiers.Classifier;
-import com.github.felipexw.classifiers.CrossValidation;
+import com.github.felipexw.core.CrossValidation;
 import com.github.felipexw.metrics.SimilarityCalculator;
-import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.Prediction;
+import com.github.felipexw.core.LabeledInstance;
+import com.github.felipexw.core.Prediction;
 
 import java.util.Collections;
 import java.util.List;

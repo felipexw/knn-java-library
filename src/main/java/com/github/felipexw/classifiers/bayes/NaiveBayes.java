@@ -1,8 +1,8 @@
 package com.github.felipexw.classifiers.bayes;
 
 import com.github.felipexw.classifiers.Classifier;
-import com.github.felipexw.classifiers.CrossValidation;
-import com.github.felipexw.types.LabeledInstance;
+import com.github.felipexw.core.CrossValidation;
+import com.github.felipexw.core.LabeledInstance;
 
 import java.util.List;
 import java.util.Map;

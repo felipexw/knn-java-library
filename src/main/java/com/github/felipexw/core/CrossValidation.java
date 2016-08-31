@@ -1,6 +1,4 @@
-package com.github.felipexw.classifiers;
-
-import com.github.felipexw.types.LabeledInstance;
+package com.github.felipexw.core;
 
 /**
  * Created by felipe.appio on 26/08/2016.

@@ -1,7 +1,7 @@
 package com.github.felipexw.evaluations;
 
-import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.Prediction;
+import com.github.felipexw.core.LabeledInstance;
+import com.github.felipexw.core.Prediction;
 
 import java.util.List;
 

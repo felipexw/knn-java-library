@@ -2,9 +2,9 @@ package com.github.felipexw.classifiers.neighbors;
 
 import com.github.felipexw.evaluations.EvaluatorMetric;
 import com.github.felipexw.metrics.SimilarityCalculator;
-import com.github.felipexw.types.Instance;
-import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.Prediction;
+import com.github.felipexw.core.Instance;
+import com.github.felipexw.core.LabeledInstance;
+import com.github.felipexw.core.Prediction;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
