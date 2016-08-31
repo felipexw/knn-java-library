@@ -10,14 +10,16 @@ import java.util.List;
  */
 public class Model implements FeatureVector {
 
-    private FeatureExtractor featureExtractor;
+    protected FeatureExtractor featureExtractor;
+    protected List features;
 
     public Model(FeatureExtractor featureExtractor) {
         this.featureExtractor = featureExtractor;
     }
 
     @Override
-    public List getData(List source) {
-        return  featureExtractor.extract(source);
+    public List getData() {
+        return  featureExtractor.extract(features);
     }
+
 }

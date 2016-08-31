@@ -52,7 +52,7 @@ public class SimpleKNNClassifier extends KNNClassifier {
                 for (List<LabeledInstance> labeled : partitionedInstances) {
                     for (LabeledInstance instance : labeled) {
                         if (i != testIndex) {
-                            Neighbor neighbor = new Neighbor(instance, -1d, featureExtractor);
+                            Neighbor neighbor = new Neighbor(instance, -1d, null);
                             List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, k);
                             features.put(neighbor, neighbors);
                         } else
@@ -128,7 +128,7 @@ public class SimpleKNNClassifier extends KNNClassifier {
     protected void calculateFeatureSimilarities() {
         for (int i = 0; i < instances.size(); i++) {
             LabeledInstance instance = instances.get(i);
-            Neighbor neighbor = new Neighbor(instance, -1d, featureExtractor);
+            Neighbor neighbor = new Neighbor(instance, -1d, null);
 
             List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, this.k);
             features.put(neighbor, neighbors);
@@ -188,19 +188,18 @@ public class SimpleKNNClassifier extends KNNClassifier {
     }
 
     protected List<Neighbor> getAllNeighbors(Instance labeledInstance) {
-        throw new UnsupportedOperationException("Continue the refactoring.");
-        /*
+
+
         List<Neighbor> neighborses = new ArrayList<>();
         for (short i = 0; i < instances.size(); i++) {
             LabeledInstance trainingInstance = instances.get(i);
             double distance = similarityCalculator.calculate(labeledInstance.getFeatures(), trainingInstance.getFeatures());
 
-            Neighbor neighbor = new Neighbor(trainingInstance, distance);
+            Neighbor neighbor = new Neighbor(trainingInstance, distance, featureExtractor);
             neighborses.add(neighbor);
         }
 
         return neighborses;
-        */
     }
 
     @Override

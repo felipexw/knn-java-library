@@ -7,5 +7,5 @@ import java.util.List;
  */
 public interface FeatureVector<T> {
 
-    List<T> getData(List<Object> source);
+    List<T> getData();
 }
