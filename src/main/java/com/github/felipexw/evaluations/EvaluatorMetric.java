@@ -1,6 +1,6 @@
 package com.github.felipexw.evaluations;
 
-import com.github.felipexw.types.LabeledTrainingInstance;
+import com.github.felipexw.types.LabeledInstance;
 import com.github.felipexw.types.PredictedInstance;
 
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.List;
  */
 public class EvaluatorMetric {
 
-    public static double accuracy(List<LabeledTrainingInstance> expectedList, List<PredictedInstance> predictedList) {
+    public static double accuracy(List<LabeledInstance> expectedList, List<PredictedInstance> predictedList) {
         if ((expectedList == null || expectedList.size() <= 1) || (predictedList == null || predictedList.size() <= 1))
             throw new IllegalArgumentException("The args can't be invalid.");
 
         double accuracy = 0d;
 
         for (int i = 0; i < expectedList.size(); i++) {
-            LabeledTrainingInstance realInstance = expectedList.get(i);
+            LabeledInstance realInstance = expectedList.get(i);
             PredictedInstance predictedInstance = predictedList.get(i);
 
             if (realInstance.getLabel().equalsIgnoreCase(predictedInstance.getLabel()))

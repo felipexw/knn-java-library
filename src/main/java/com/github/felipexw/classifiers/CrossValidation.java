@@ -1,11 +1,11 @@
 package com.github.felipexw.classifiers;
 
-import com.github.felipexw.types.LabeledTrainingInstance;
+import com.github.felipexw.types.LabeledInstance;
 
 /**
  * Created by felipe.appio on 26/08/2016.
  */
-public interface CrossValidation extends Model {
+public interface CrossValidation extends Predictable {
 
-    void train(java.util.List<LabeledTrainingInstance> instances, int k);
+    void train(java.util.List<LabeledInstance> instances, int k);
 }

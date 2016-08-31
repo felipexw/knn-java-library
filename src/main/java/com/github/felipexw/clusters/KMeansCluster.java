@@ -1,7 +1,5 @@
 package com.github.felipexw.clusters;
 
-import com.github.felipexw.types.UnlabeledInstance;
-
 import java.util.List;
 
 /**

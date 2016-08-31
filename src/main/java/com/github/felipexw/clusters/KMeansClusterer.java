@@ -1,9 +1,6 @@
 package com.github.felipexw.clusters;
 
 import com.github.felipexw.metrics.SimilarityCalculator;
-import com.github.felipexw.types.LabeledTrainingInstance;
-import com.github.felipexw.types.PredictedInstance;
-import com.github.felipexw.types.UnlabeledInstance;
 
 import java.util.List;
 

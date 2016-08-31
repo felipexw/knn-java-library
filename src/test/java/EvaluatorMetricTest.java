@@ -1,7 +1,5 @@
 import com.github.felipexw.evaluations.EvaluatorMetric;
-import com.github.felipexw.types.LabeledTrainingInstance;
 import com.google.common.collect.Lists;
-import com.google.common.truth.Truth;
 import org.junit.Before;
 import org.junit.Test;
 

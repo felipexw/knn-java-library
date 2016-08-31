@@ -3,7 +3,7 @@ package com.github.felipexw.classifiers.bayes;
 import com.github.felipexw.classifiers.Classifier;
 import com.github.felipexw.classifiers.CrossValidation;
 import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.LabeledTrainingInstance;
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +15,7 @@ public abstract class NaiveBayes implements Classifier, CrossValidation {
   protected Map<String, Double> prioriProbs;
   protected Map<String, Integer> labels;
 
-  public abstract void calculateProbs(List<LabeledTrainingInstance> instanceList);
+  public abstract void calculateProbs(List<LabeledInstance> instanceList);
 
   public Map<String, Double> getPrioriProbs() {
     return prioriProbs;
@@ -25,5 +25,5 @@ public abstract class NaiveBayes implements Classifier, CrossValidation {
     return posterioriProbs;
   }
 
-  public abstract void calculatePosterioriProbability(LabeledTrainingInstance instances);
+  public abstract void calculatePosterioriProbability(LabeledInstance instances);
 }

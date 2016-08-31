@@ -5,7 +5,6 @@ import com.github.felipexw.classifiers.CrossValidation;
 import com.github.felipexw.evaluations.EvaluatorMetric;
 import com.github.felipexw.metrics.SimilarityCalculator;
 import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -19,7 +18,7 @@ import java.util.List;
 public class SimpleKNNClassifier implements Classifier, CrossValidation {
     protected int k;
     protected Map<Neighbor, List<Neighbor>> features;
-    protected List<LabeledTrainingInstance> instances;
+    protected List<LabeledInstance> instances;
     protected SimilarityCalculator similarityCalculator;
 
     public SimpleKNNClassifier(SimilarityCalculator similarityCalculator) {
@@ -32,19 +31,19 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
     }
 
     @Override
-    public void train(List<LabeledTrainingInstance> instances) {
+    public void train(List<LabeledInstance> instances) {
         setUpForTraining(instances);
         calculateFeatureSimilarities();
     }
 
     @Override
-    public void train(List<LabeledTrainingInstance> instances, int k) {
+    public void train(List<LabeledInstance> instances, int k) {
         setUpForTraining(instances);
         instances = getInstancesthatMaximizeAccuracy();
         calculateFeatureSimilarities();
     }
 
-    protected List<LabeledTrainingInstance> getInstancesthatMaximizeAccuracy() {
+    protected List<LabeledInstance> getInstancesthatMaximizeAccuracy() {
         List<List<LabeledTrainingInstance>> partitionedInstances = Lists.partition(instances, instances.size()/k);
         int testIndex = 0;
 
@@ -125,7 +124,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
     }
 
 
-    protected void setUpForTraining(List<LabeledTrainingInstance> instances) {
+    protected void setUpForTraining(List<LabeledInstance> instances) {
         if (instances == null || instances.isEmpty())
             throw new IllegalArgumentException("Instances for training can't be null or empty.");
 
@@ -135,7 +134,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
 
     protected void calculateFeatureSimilarities() {
         for (int i = 0; i < instances.size(); i++) {
-            LabeledTrainingInstance instance = instances.get(i);
+            LabeledInstance instance = instances.get(i);
             Neighbor neighbor = new Neighbor(instance, -1d);
 
             List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, this.k);
@@ -144,11 +143,13 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
     }
 
     protected List<Neighbor> getNeighborsWithDistanceFromARootNeighboor(Neighbor neighbor, int threshold) {
+        throw new UnsupportedOperationException("Continue the implementation");
+        /*
         List<Neighbor> neighbors = new ArrayList<>();
-        LabeledTrainingInstance instance = neighbor.getInstance();
+        LabeledInstance instance = neighbor.getInstance();
 
         for (int j = -1; j < instances.size() - 1; j++) {
-            LabeledTrainingInstance neighborInstance = instances.get(j + 1);
+            LabeledInstance neighborInstance = instances.get(j + 1);
             double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
             Neighbor neighborRoot = new Neighbor(neighborInstance, similarity);
             neighbors.add(neighborRoot);
@@ -157,9 +158,10 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
         }
 
         return neighbors;
+        */
     }
 
-    public List<Neighbor> similarNeighbors(LabeledTrainingInstance trainingInstance, int k) {
+    public List<Neighbor> similarNeighbors(LabeledInstance trainingInstance, int k) {
         if (trainingInstance == null)
             throw new IllegalArgumentException("Neighboor can't be invalid");
 
@@ -171,7 +173,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
     }
 
     @Override
-    public PredictedInstance predict(LabeledTrainingInstance labeledInstance) {
+    public PredictedInstance predict(LabeledInstance labeledInstance) {
         if (labeledInstance == null)
             throw new IllegalArgumentException("Instance to predict can't be null");
 
@@ -180,21 +182,23 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
     }
 
     @Override
-    public List<PredictedInstance> predict(List<LabeledTrainingInstance> instances) {
+    public List<PredictedInstance> predict(List<LabeledInstance> instances) {
         if (instances == null || instances.isEmpty())
             throw new IllegalArgumentException("instanances can't be empty or null");
 
         List<PredictedInstance> predictedInstanceList = new ArrayList<>();
-        for(LabeledTrainingInstance instance: instances)
+        for(LabeledInstance instance: instances)
             predictedInstanceList.add(predict(instance));
 
         return predictedInstanceList;
     }
 
-    protected List<Neighbor> getAllNeighbors(LabeledTrainingInstance labeledInstance) {
+    protected List<Neighbor> getAllNeighbors(LabeledInstance labeledInstance) {
+        throw new UnsupportedOperationException("Continue the refactoring.");
+        /*
         List<Neighbor> neighborses = new ArrayList<>();
         for (short i = 0; i < instances.size(); i++) {
-            LabeledTrainingInstance trainingInstance = instances.get(i);
+            LabeledInstance trainingInstance = instances.get(i);
             double distance = similarityCalculator.calculate(labeledInstance.getFeatures(), trainingInstance.getFeatures());
 
             Neighbor neighbor = new Neighbor(trainingInstance, distance);
@@ -202,6 +206,7 @@ public class SimpleKNNClassifier implements Classifier, CrossValidation {
         }
 
         return neighborses;
+        */
     }
 
 

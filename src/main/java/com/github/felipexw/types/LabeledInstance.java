@@ -3,7 +3,7 @@ package com.github.felipexw.types;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public class LabeledInstance implements Instance {
+public class LabeledInstance<T> extends Instance<T> {
   protected final String label;
   private int count;
 

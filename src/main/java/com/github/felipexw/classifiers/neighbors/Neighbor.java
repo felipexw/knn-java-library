@@ -1,20 +1,20 @@
 package com.github.felipexw.classifiers.neighbors;
 
-import com.github.felipexw.types.LabeledTrainingInstance;
+import com.github.felipexw.types.LabeledInstance;
 
 /**
  * Created by felipe.appio on 24/08/2016.
  */
 public class Neighbor {
-    private final LabeledTrainingInstance instance;
+    private final LabeledInstance instance;
     private final double distance;
 
-    public Neighbor(LabeledTrainingInstance instance, double distance) {
+    public Neighbor(LabeledInstance instance, double distance) {
         this.instance = instance;
         this.distance = distance;
     }
 
-    public LabeledTrainingInstance getInstance() {
+    public LabeledInstance getInstance() {
         return instance;
     }
 

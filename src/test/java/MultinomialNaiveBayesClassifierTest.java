@@ -1,7 +1,5 @@
 import com.github.felipexw.classifiers.bayes.MultinomialNaiveBayesClassifier;
 import com.github.felipexw.classifiers.bayes.NaiveBayes;
-import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.LabeledTrainingInstance;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +50,7 @@ public class MultinomialNaiveBayesClassifierTest {
          *  4) 'linux its good' (positive
          * it should calculate de posterior probabilities
          */
-
+/*
         String negativeLabel = "negative";
         String positiveLabel = "positive";
 
@@ -60,28 +58,34 @@ public class MultinomialNaiveBayesClassifierTest {
         double[] featuresB = {"amd".hashCode(), "sucks".hashCode()};
         double[] featuresC = {"intel".hashCode(), "its".hashCode(), "good".hashCode()};
         double[] featuresD = {"linux".hashCode(), "its".hashCode(), "good".hashCode()};
+        double[] featuresE = {"intel".hashCode(), "pentium4".hashCode(), "its".hashCode(), "bad".hashCode()};
+        double[] featuresF = {"intel".hashCode(), "celeron".hashCode(), "its".hashCode(), "bad".hashCode()};
 
         LabeledTrainingInstance intance1 = new LabeledTrainingInstance(featuresA, negativeLabel);
         LabeledTrainingInstance intance2 = new LabeledTrainingInstance(featuresB, negativeLabel);
         LabeledTrainingInstance intance3 = new LabeledTrainingInstance(featuresC, positiveLabel);
         LabeledTrainingInstance intance4 = new LabeledTrainingInstance(featuresD, positiveLabel);
+        LabeledTrainingInstance intance5 = new LabeledTrainingInstance(featuresE, negativeLabel);
+        LabeledTrainingInstance intance6 = new LabeledTrainingInstance(featuresF, negativeLabel);
 
-        classifier.train(Arrays.asList(intance1, intance2, intance3, intance4));
+        classifier.train(Arrays.asList(intance1, intance2, intance3, intance4, intance5 ));
         Map<String, List<LabeledInstance>> probs = classifier.getPosterioriProbs();;
 
-        /*for(Double key: probs.keySet()){
+        List<LabeledInstance> is = probs.get(String.valueOf(Double.parseDouble(String.valueOf("intel".hashCode()))));
 
-
-
-        }*/
-
-        List<LabeledInstance> is = probs.get(String.valueOf(Double.parseDouble(String.valueOf("its".hashCode()))));
         for(LabeledInstance instance: is){
-            System.out.println(instance.getCount());
+            if (instance.getLabel().equalsIgnoreCase(positiveLabel))
+                assertThat(instance.getCount()).isEqualTo(1);
+            else
+                assertThat(instance.getCount()).isEqualTo(2);
+
         }
 
         assertThat(probs.size())
-                .isEqualTo(7);
+                .isEqualTo(9);
+                */
+
+
 
     }
 

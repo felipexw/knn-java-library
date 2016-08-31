@@ -5,6 +5,6 @@ import java.util.List;
 /**
  * Created by felipe.appio on 23/08/2016.
  */
-public interface Instance {
-
+public abstract class Instance<T> {
+    private List<T> t;
 }

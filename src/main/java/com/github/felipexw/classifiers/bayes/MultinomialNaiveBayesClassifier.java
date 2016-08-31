@@ -1,8 +1,6 @@
 package com.github.felipexw.classifiers.bayes;
 
-import com.github.felipexw.classifiers.Classifier;
 import com.github.felipexw.types.LabeledInstance;
-import com.github.felipexw.types.LabeledTrainingInstance;
 import com.github.felipexw.types.PredictedInstance;
 
 import java.util.ArrayList;
@@ -26,23 +24,23 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
     }
 
     @Override
-    public void train(List<LabeledTrainingInstance> instances) {
+    public void train(List<LabeledInstance> instances) {
         calculateProbs(instances);
 
     }
 
     @Override
-    public void train(List<LabeledTrainingInstance> instances, int k) {
+    public void train(List<LabeledInstance> instances, int k) {
 
     }
 
     @Override
-    public PredictedInstance predict(LabeledTrainingInstance instance) {
+    public PredictedInstance predict(LabeledInstance instance) {
         return null;
     }
 
     @Override
-    public List<PredictedInstance> predict(List<LabeledTrainingInstance> instances) {
+    public List<PredictedInstance> predict(List<LabeledInstance> instances) {
         List<PredictedInstance> predictions = new ArrayList<>();
 
         instances.forEach((instance) -> {
@@ -54,13 +52,17 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
 
 
     @Override
-    public void calculateProbs(List<LabeledTrainingInstance> instanceList) {
+    public void calculateProbs(List<LabeledInstance> instanceList) {
         if (instanceList == null || instanceList.isEmpty())
             throw new IllegalArgumentException("Args can't be null");
 
-        for (LabeledTrainingInstance instance : instanceList) {
-            if (!labels.containsKey(instance.getLabel())) {
+        for (LabeledInstance instance : instanceList) {
+            String key = instance.getLabel();
+            if (!labels.containsKey(key)) {
                 labels.put(instance.getLabel(), 1);
+            }
+            else{
+                labels.put(key, labels.get(key)+1);
             }
 
             calculatePosterioriProbability(instance);
@@ -68,19 +70,22 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
     }
 
     @Override
-    public void calculatePosterioriProbability(LabeledTrainingInstance instance) {
-        double[] features = instance.getFeatures();
+    public void calculatePosterioriProbability(LabeledInstance instance) {
+        throw new UnsupportedOperationException("Continue the implementation");
+        /**
+         double[] features = instance.getFeatures();
 
-        for (int i = 0; i < features.length; i++) {
-            double key = features[i];
+         for (int i = 0; i < features.length; i++) {
+         double key = features[i];
 
-            if (!this.posterioriProbs.containsKey(key)) {
-                List<LabeledInstance> instances = Arrays.asList(new LabeledInstance(instance.getLabel()));
-                this.posterioriProbs.put(String.valueOf(key), instances);
-            } else {
-                countFromLabels(this.posterioriProbs.get(key), instance);
-            }
-        }
+         if (!this.posterioriProbs.containsKey(key)) {
+         List<LabeledInstance> instances = Arrays.asList(new LabeledInstance(instance.getLabel()));
+         this.posterioriProbs.put(String.valueOf(key), instances);
+         } else {
+         countFromLabels(this.posterioriProbs.get(key), instance);
+         }
+         }
+         */
     }
 
     private void countFromLabels(List<LabeledInstance> instances, LabeledInstance instance) {
