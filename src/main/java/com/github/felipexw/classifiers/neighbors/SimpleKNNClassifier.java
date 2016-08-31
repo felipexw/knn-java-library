@@ -1,15 +1,14 @@
 package com.github.felipexw.classifiers.neighbors;
 
+import com.github.felipexw.core.*;
+import com.github.felipexw.core.extraction.DoubleFeatureExtractor;
+import com.github.felipexw.core.extraction.FeatureExtractor;
 import com.github.felipexw.evaluations.EvaluatorMetric;
 import com.github.felipexw.evaluations.metrics.SimilarityCalculator;
-import com.github.felipexw.core.Instance;
-import com.github.felipexw.core.LabeledInstance;
-import com.github.felipexw.core.Prediction;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
 import java.util.*;
-import java.util.List;
 
 /**
  * Created by felipe.appio on 23/08/2016.
@@ -17,7 +16,7 @@ import java.util.List;
 public class SimpleKNNClassifier extends KNNClassifier {
 
 
-    public SimpleKNNClassifier(SimilarityCalculator similarityCalculator) {
+    public SimpleKNNClassifier(SimilarityCalculator similarityCalculator, FeatureExtractor featureExtractor) {
         this.similarityCalculator = similarityCalculator;
         k = 5;
     }
@@ -53,7 +52,7 @@ public class SimpleKNNClassifier extends KNNClassifier {
                 for (List<LabeledInstance> labeled : partitionedInstances) {
                     for (LabeledInstance instance : labeled) {
                         if (i != testIndex) {
-                            Neighbor neighbor = new Neighbor(instance, -1d);
+                            Neighbor neighbor = new Neighbor(instance, -1d, featureExtractor);
                             List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, k);
                             features.put(neighbor, neighbors);
                         } else
@@ -129,7 +128,7 @@ public class SimpleKNNClassifier extends KNNClassifier {
     protected void calculateFeatureSimilarities() {
         for (int i = 0; i < instances.size(); i++) {
             LabeledInstance instance = instances.get(i);
-            Neighbor neighbor = new Neighbor(instance, -1d);
+            Neighbor neighbor = new Neighbor(instance, -1d, featureExtractor);
 
             List<Neighbor> neighbors = getNeighborsWithDistanceFromARootNeighboor(neighbor, this.k);
             features.put(neighbor, neighbors);
@@ -137,16 +136,21 @@ public class SimpleKNNClassifier extends KNNClassifier {
     }
 
     protected List<Neighbor> getNeighborsWithDistanceFromARootNeighboor(Neighbor neighbor, int threshold) {
-        throw new UnsupportedOperationException("Continue the implementation");
 
+
+//        LabeledInstance<Double, String> t = new LabeledInstance<>("2");
+
+
+        Neighbor nei = new Neighbor(null, 0d, featureExtractor);
         List<Neighbor> neighbors = new ArrayList<>();
+
         LabeledInstance instance = neighbor.getInstance();
 
         for (int j = -1; j < instances.size() - 1; j++) {
             LabeledInstance neighborInstance = instances.get(j + 1);
 //            double similarity = similarityCalculator.calculate(instance.getFeatures(), neighborInstance.getFeatures());
             double similarity = 0d;
-            Neighbor neighborRoot = new Neighbor(neighborInstance, similarity);
+            Neighbor neighborRoot = new Neighbor(neighborInstance, similarity, new DoubleFeatureExtractor());
             neighbors.add(neighborRoot);
             if (neighbors.size() == threshold)
                 return neighbors;
@@ -163,7 +167,7 @@ public class SimpleKNNClassifier extends KNNClassifier {
         if (features.containsKey(trainingInstance))
             features.get(trainingInstance);
 
-        Neighbor neighbor1 = new Neighbor(trainingInstance, -1d);
+        Neighbor neighbor1 = new Neighbor(trainingInstance, -1d, featureExtractor);
         return getNeighborsWithDistanceFromARootNeighboor(neighbor1, k);
     }
 
@@ -209,13 +213,13 @@ public class SimpleKNNClassifier extends KNNClassifier {
         Map<String, Integer> votes = new HashMap<>();
 
         for (Neighbor neighbor : neighbors) {
-            LabeledInstance<String, Double> instance = neighbor.getInstance();
+            LabeledInstance<Label, Model> instance = neighbor.getInstance();
             if (!votes.containsKey(instance.getLabel()))
-                votes.put(instance.getLabel(), 1);
+                votes.put(instance.getLabel().toString(), 1);
 
             else {
                 Integer count = votes.get(instance.getLabel());
-                votes.put(instance.getLabel(), count + 1);
+                votes.put(instance.getLabel().toString(), count + 1);
             }
 
         }
@@ -250,8 +254,8 @@ public class SimpleKNNClassifier extends KNNClassifier {
 
         for (int i = 0; i < neighbors.size(); i++) {
             Neighbor neighbor = neighbors.get(i);
-            LabeledInstance<String, Double> instance = neighbor.getInstance();
-            if (instance.getLabel().equalsIgnoreCase(label) && neighbor.getDistance() < distance) {
+            LabeledInstance<Label, Model> instance = neighbor.getInstance();
+            if (instance.getLabel().toString().equalsIgnoreCase(label) && neighbor.getDistance() < distance) {
                 distance = neighbor.getDistance();
                 index = i;
             }

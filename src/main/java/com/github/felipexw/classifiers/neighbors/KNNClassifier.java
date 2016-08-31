@@ -2,6 +2,7 @@ package com.github.felipexw.classifiers.neighbors;
 
 import com.github.felipexw.classifiers.Classifier;
 import com.github.felipexw.core.CrossValidation;
+import com.github.felipexw.core.extraction.FeatureExtractor;
 import com.github.felipexw.evaluations.metrics.SimilarityCalculator;
 import com.github.felipexw.core.LabeledInstance;
 import com.github.felipexw.core.Prediction;
@@ -18,6 +19,7 @@ public abstract class KNNClassifier implements Classifier, CrossValidation {
     protected Map<Neighbor, List<Neighbor>> features;
     protected List<LabeledInstance> instances;
     protected SimilarityCalculator similarityCalculator;
+    protected FeatureExtractor featureExtractor;
 
     public abstract Prediction vote(List<Neighbor> neighbors);
 

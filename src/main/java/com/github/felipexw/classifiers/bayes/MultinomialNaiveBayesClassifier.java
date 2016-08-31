@@ -1,8 +1,6 @@
 package com.github.felipexw.classifiers.bayes;
 
-import com.github.felipexw.core.Instance;
-import com.github.felipexw.core.LabeledInstance;
-import com.github.felipexw.core.Prediction;
+import com.github.felipexw.core.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,10 +54,10 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
         if (instanceList == null || instanceList.isEmpty())
             throw new IllegalArgumentException("Args can't be null");
 
-        for (LabeledInstance<String, Double> instance : instanceList) {
-            String key = instance.getLabel();
+        for (LabeledInstance<Label, Model> instance : instanceList) {
+            String key = instance.getLabel().toString();
             if (!labels.containsKey(key)) {
-                labels.put(instance.getLabel(), 1);
+                labels.put(instance.getLabel().toString(), 1);
             }
             else{
                 labels.put(key, labels.get(key)+1);
@@ -88,9 +86,9 @@ public class MultinomialNaiveBayesClassifier extends NaiveBayes {
          */
     }
 
-    private void countFromLabels(List<LabeledInstance<String, Double>> instances, LabeledInstance<String, Double> instance) {
-        for (LabeledInstance<String, Double> featuresInstance : instances) {
-            if (featuresInstance.getLabel().equalsIgnoreCase(instance.getLabel())) {
+    private void countFromLabels(List<LabeledInstance<Label, Model>> instances, LabeledInstance<Label, Model> instance) {
+        for (LabeledInstance<Label, Model> featuresInstance : instances) {
+            if (featuresInstance.getLabel().toString().equalsIgnoreCase(instance.getLabel().toString())) {
                 featuresInstance.setCount(featuresInstance.getCount() + 1);
             } else {
                 instance.setCount(1);

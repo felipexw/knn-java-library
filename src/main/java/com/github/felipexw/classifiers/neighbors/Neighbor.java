@@ -1,15 +1,18 @@
 package com.github.felipexw.classifiers.neighbors;
 
 import com.github.felipexw.core.LabeledInstance;
+import com.github.felipexw.core.Model;
+import com.github.felipexw.core.extraction.FeatureExtractor;
 
 /**
  * Created by felipe.appio on 24/08/2016.
  */
-public class Neighbor {
-    private final LabeledInstance instance;
-    private final double distance;
+public class Neighbor extends  Model {
+    private LabeledInstance instance;
+    private double distance;
 
-    public Neighbor(LabeledInstance instance, double distance) {
+    public Neighbor(LabeledInstance instance, double distance, FeatureExtractor featureExtractor) {
+        super(featureExtractor);
         this.instance = instance;
         this.distance = distance;
     }
