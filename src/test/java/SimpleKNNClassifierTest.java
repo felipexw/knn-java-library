@@ -106,18 +106,58 @@ public class SimpleKNNClassifierTest {
         classifier.train(Arrays.asList(pointA, pointB, pointC, pointD));
         List<Neighbor> similarNeighbors = classifier.similarNeighbors(pointE, 2);
 
-        Neighbor n1 = new Neighbor(new LabeledInstance(null, pointA.getModel()), 0d, null);
-        Neighbor n2 = new Neighbor(new LabeledInstance(null, pointB.getModel()), 0d, null);
+        Neighbor n1 = new Neighbor(new LabeledInstance(negativeLabel, pointA.getModel()), 0d, null);
+        Neighbor n2 = new Neighbor(new LabeledInstance(negativeLabel, pointB.getModel()), 0d, null);
 
         Truth.assertThat(similarNeighbors)
                 .containsAllIn(Arrays.asList(n1, n2));
     }
+
+    @Test
+    public void when_trained_with_k_fold_it_should_predict_a_positive_label(){
+        /*
+        given a set of negative points:
+           -    A(2,4); B(3,2); C(4,4)
+        and a set of positive points:
+           -    D(4,1); E(5,5); F(6,3)
+        the algorithm must predict the label (which its positive or negative) for the point G(10,7)
+        */
+
+        String positiveLabel = "positive";
+        String negativeLabel = "negative";
+
+        LabeledInstance pointA = new LabeledInstance(negativeLabel, new TestModel(null, Arrays.asList(2d, 4d)));
+        LabeledInstance pointB = new LabeledInstance(negativeLabel, new TestModel(null, Arrays.asList(3d, 2d)));
+        LabeledInstance pointC = new LabeledInstance(negativeLabel, new TestModel(null, Arrays.asList(4d, 4d)));
+
+        LabeledInstance pointD = new LabeledInstance(positiveLabel, new TestModel(null, Arrays.asList(4d, 1d)));
+        LabeledInstance pointE = new LabeledInstance(positiveLabel, new TestModel(null, Arrays.asList(5d, 5d)));
+        LabeledInstance pointF = new LabeledInstance(positiveLabel, new TestModel(null, Arrays.asList(6d, 3d)));
+
+        classifier.setK(3);
+        classifier.train(Arrays.asList(pointA, pointB, pointC, pointD, pointE, pointF), 3);
+
+        double scoreExpected = Math.sqrt(29)/100;
+        Prediction predictedInstance = new Prediction(positiveLabel, scoreExpected);
+
+        Prediction predictedInstance1 = classifier.predict(pointF);
+        Truth.assertThat(predictedInstance.getLabel())
+                .isEqualTo(positiveLabel);
+        Truth.assertThat(predictedInstance.getScore())
+                .isEqualTo(scoreExpected);
+    }
+
+
 
     @Test(expected = IllegalArgumentException.class)
     public void when_similarNeighbors_its_called_with_null_neighbors_args_it_should_raise_an_exception(){
         classifier.similarNeighbors(null, 10);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void it_should_raise_an_exception_when_predict_list_method_its_called(){
+        classifier.predict(Collections.emptyList());
+    }
 }
 
 
